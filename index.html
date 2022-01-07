@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="scss/style.css" />
+    <title>Battleship</title>
+  </head>
+  <body>
+    <header>
+      <h1>Battleship</h1>
+    </header>
+    <button>Start Game</button>
+    <div class="container">
+      <div class="your-board"></div>
+      <div class="enemy-board"></div>
+    </div>
+    <div class="boats">
+      <h4>Drag and drop your boats on the board</h4>
+      <p id="tracker">sdas</p>
+      <div class="ship ship-1" id="drag-div" draggable="true">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="ship ship-2" draggable="true">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="ship ship-3" draggable="true">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="ship ship-4" draggable="true">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <footer></footer>
+    <script src="app.js"></script>
+  </body>
+</html>

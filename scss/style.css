@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: bisque;
+  width: 100%;
+}
+
+body .container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  -ms-grid-rows: 500px 100px;
+      grid-template-rows: 500px 100px;
+}
+
+body .container .your-board {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 550px;
+  height: 500px;
+}
+
+body .container .enemy-board {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 550px;
+  height: 500px;
+}
+
+body .square {
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+}
+
+body .boats .ship {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+body .boats .ship-1 div {
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-color: lightblue;
+  border: 1px solid;
+}
+
+body .boats .ship-2 div {
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-color: orange;
+  border: 1px solid;
+}
+
+body .boats .ship-3 div {
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  border: 1px solid;
+}
+
+body .boats .ship-4 div {
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-color: brown;
+  border: 1px solid;
+}
+/*# sourceMappingURL=style.css.map */
