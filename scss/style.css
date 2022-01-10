@@ -9,6 +9,7 @@ body {
 }
 
 body .container {
+  margin-top: 2em;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -33,7 +34,7 @@ body .container .enemy-board {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  width: 550px;
+  width: 500px;
   height: 500px;
 }
 

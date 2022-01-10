@@ -9,6 +9,7 @@ body {
   width: 100%;
 
   .container {
+    margin-top: 2em;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 500px 100px;
@@ -23,7 +24,7 @@ body {
     .enemy-board {
       display: flex;
       flex-wrap: wrap;
-      width: 550px;
+      width: 500px;
       height: 500px;
     }
   }
