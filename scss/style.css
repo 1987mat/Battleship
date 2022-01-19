@@ -6,82 +6,161 @@
 }
 
 body {
-  background-color: bisque;
   width: 100%;
+  height: 100vh;
+  background: #af8b2d;
+  background: -webkit-gradient(linear, left top, right top, from(#af8b2d), to(#add4a6));
+  background: linear-gradient(90deg, #af8b2d 0%, #add4a6 100%);
 }
 
-body .container {
+body header h1 {
+  font-size: 2.8rem;
+  margin: 0;
+}
+
+body .container .start-game {
+  text-align: center;
+}
+
+body .container .start-game .start-game-btn {
+  border: none;
+  border-radius: 5px 5px;
+  height: 3em;
+  width: 7em;
+  font-size: 1rem;
+  background-color: lightyellow;
+  -webkit-box-shadow: 5px 5px 5px gray;
+          box-shadow: 5px 5px 5px gray;
+}
+
+body .container .start-game .start-game-btn:hover {
+  cursor: pointer;
+  background-color: linen;
+}
+
+body .container .boards-wrapper {
   margin-top: 2em;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
-  -ms-grid-rows: 500px 100px;
-      grid-template-rows: 500px 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
-body .container .player-board {
+body .container .boards-wrapper h3 {
+  text-align: center;
+}
+
+body .container .boards-wrapper .player-board {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  width: 31.25em;
-  height: 31.25em;
+  width: 25em;
+  height: 25em;
 }
 
-body .container .computer-board {
+body .container .boards-wrapper .computer-board {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  width: 500px;
-  height: 500px;
+  width: 25em;
+  height: 25em;
 }
 
-body .container .square {
+body .container .boards-wrapper .square {
   border: 1px solid black;
-  width: 50px;
-  height: 50px;
+  width: 2.5em;
+  height: 2.5em;
 }
 
-body .boats .ship {
+body .ship-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 1em;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin: 3em;
 }
 
-body .boats .ship-1 div {
-  float: left;
-  width: 50px;
-  height: 50px;
-  background-color: lightblue;
-  border: 1px solid;
+body .ship-wrapper .destroyer {
+  margin: 2em;
 }
 
-body .boats .ship-2 div {
-  float: left;
-  width: 50px;
-  height: 50px;
-  background-color: orange;
-  border: 1px solid;
+body .ship-wrapper .destroyer .ship {
+  background-color: blue;
+  border: 1px solid black;
+  height: 2.5em;
+  width: 2.5em;
 }
 
-body .boats .ship-3 div {
-  float: left;
-  width: 50px;
-  height: 50px;
+body .ship-wrapper .cruiser {
+  margin: 2em;
+}
+
+body .ship-wrapper .cruiser .ship {
   background-color: red;
-  border: 1px solid;
+  border: 1px solid black;
+  height: 2.5em;
+  width: 2.5em;
 }
 
-body .boats .ship-4 div {
-  float: left;
-  width: 50px;
-  height: 50px;
-  background-color: brown;
-  border: 1px solid;
+body .ship-wrapper .battleship {
+  margin: 2em;
+}
+
+body .ship-wrapper .battleship .ship {
+  background-color: pink;
+  border: 1px solid black;
+  height: 2.5em;
+  width: 2.5em;
+}
+
+body .ship-wrapper .submarine {
+  margin: 2em;
+}
+
+body .ship-wrapper .submarine .ship {
+  background-color: yellow;
+  border: 1px solid black;
+  height: 2.5em;
+  width: 2.5em;
+}
+
+body .ship-wrapper .carrier {
+  margin: 2em;
+}
+
+body .ship-wrapper .carrier .ship {
+  background-color: orange;
+  border: 1px solid black;
+  height: 2.5em;
+  width: 2.5em;
+}
+
+body footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 2em;
+  text-align: center;
+}
+
+body footer a {
+  text-decoration: none;
+  color: black;
 }
 /*# sourceMappingURL=style.css.map */

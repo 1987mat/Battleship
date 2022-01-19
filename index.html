@@ -4,19 +4,84 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"
+    ></script>
     <link rel="stylesheet" href="scss/style.css" />
-    <title>Battleship</title>
+    <title>Battleship Game</title>
   </head>
   <body>
     <header>
       <h1>Battleship</h1>
     </header>
-    <button>Start Game</button>
     <div class="container">
-      <div class="player-board"></div>
-      <div class="computer-board"></div>
+      <div class="start-game">
+        <button class="start-game-btn">Start Game</button>
+      </div>
+      <div class="boards-wrapper">
+        <div class="player-board-wrapper">
+          <h3>Your Board</h3>
+          <div class="player-board"></div>
+        </div>
+        <div class="computer-board-wrapper">
+          <h3>Computer Board</h3>
+          <div class="computer-board"></div>
+        </div>
+      </div>
+      <div class="ship-instructions">
+          <h4>Drag and drop your ships</h4>
+          <h5>Double click to rotate the ship</h5>
+          <p class="status">
+       
+          </p>
+      </div>
+      <div class="ship-wrapper">
+        <div class="drag" draggable="true">
+          <div class="destroyer boat">
+            <div class="ship" id="1"></div>
+            <div class="ship" id="2"></div>
+            <div class="ship" id="3"></div>
+            <div class="ship" id="4"></div>
+            <div class="ship" id="5"></div>
+          </div>
+        </div>
+        <div class="drag" draggable="true">
+          <div class="cruiser boat">
+            <div class="ship" id="1"></div>
+            <div class="ship" id="2"></div>
+            <div class="ship" id="3"></div>
+            <div class="ship" id="4"></div>
+          </div>
+        </div>
+        <div class="drag" draggable="true">
+          <div class="battleship boat">
+            <div class="ship" id="1"></div>
+            <div class="ship" id="2"></div>
+            <div class="ship" id="3"></div>
+          </div>
+        </div>
+        <div class="drag" draggable="true">
+          <div class="submarine boat">
+            <div class="ship" id="1"></div>
+            <div class="ship" id="2"></div>
+          </div>
+        </div>
+        <div class="drag" draggable="true">
+          <div class="carrier boat">
+            <div class="ship" id="1"></div>
+            <div class="ship" id="2"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <footer></footer>
+    </div>
+    <!-- <footer>
+      Developed by Mat
+      <a href="https://github.com/1987mat" target="_blank"
+        ><ion-icon name="logo-github"></ion-icon
+      ></a>
+    </footer> -->
     <script src="app.js"></script>
   </body>
 </html>
