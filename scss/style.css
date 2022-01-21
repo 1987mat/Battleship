@@ -66,6 +66,18 @@ body .container .boards-wrapper .player-board {
   height: 25em;
 }
 
+body .container .boards-wrapper .player-board .mouse-in {
+  background-color: blueviolet;
+}
+
+body .container .boards-wrapper .player-board .mouse-leave {
+  background-color: transparent;
+}
+
+body .container .boards-wrapper .player-board .click {
+  background-color: red;
+}
+
 body .container .boards-wrapper .computer-board {
   display: -webkit-box;
   display: -ms-flexbox;

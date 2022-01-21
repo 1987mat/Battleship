@@ -57,6 +57,18 @@ body {
         flex-wrap: wrap;
         width: 25em;
         height: 25em;
+
+        .mouse-in {
+          background-color: blueviolet;
+        }
+
+        .mouse-leave {
+          background-color: transparent;
+        }
+
+        .click {
+          background-color: red;
+        }
       }
 
       .computer-board {
