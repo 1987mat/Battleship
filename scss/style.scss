@@ -86,14 +86,27 @@ body {
     }
   }
 
+  .btn-confirm {
+    margin: 2em;
+    border: none;
+    border-radius: 5px 5px;
+    height: 3em;
+    width: 7em;
+    font-size: 1rem;
+    background-color: lightyellow;
+    box-shadow: 5px 5px 5px gray;
+
+    &:hover {
+      cursor: pointer;
+      background-color: linen;
+    }
+  }
+
   .ship-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin: 3em;
-
-    // .ship-instructions {
-    // }
 
     .destroyer {
       margin: 2em;
@@ -139,15 +152,14 @@ body {
       }
     }
 
-    .carrier {
-      margin: 2em;
+    .selected {
+      border: 5px solid green;
+      border-radius: 5px 5px;
+      padding: 0.5em;
+    }
 
-      .ship {
-        background-color: orange;
-        border: 1px solid black;
-        height: 2.5em;
-        width: 2.5em;
-      }
+    .hidden {
+      opacity: 0;
     }
   }
 

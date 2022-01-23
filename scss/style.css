@@ -94,6 +94,23 @@ body .container .boards-wrapper .square {
   height: 2.5em;
 }
 
+body .btn-confirm {
+  margin: 2em;
+  border: none;
+  border-radius: 5px 5px;
+  height: 3em;
+  width: 7em;
+  font-size: 1rem;
+  background-color: lightyellow;
+  -webkit-box-shadow: 5px 5px 5px gray;
+          box-shadow: 5px 5px 5px gray;
+}
+
+body .btn-confirm:hover {
+  cursor: pointer;
+  background-color: linen;
+}
+
 body .ship-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -152,15 +169,14 @@ body .ship-wrapper .submarine .ship {
   width: 2.5em;
 }
 
-body .ship-wrapper .carrier {
-  margin: 2em;
+body .ship-wrapper .selected {
+  border: 5px solid green;
+  border-radius: 5px 5px;
+  padding: 0.5em;
 }
 
-body .ship-wrapper .carrier .ship {
-  background-color: orange;
-  border: 1px solid black;
-  height: 2.5em;
-  width: 2.5em;
+body .ship-wrapper .hidden {
+  opacity: 0;
 }
 
 body footer {
