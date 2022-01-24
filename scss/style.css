@@ -20,14 +20,16 @@ body header h1 {
 
 body .container .start-game {
   text-align: center;
+  margin-top: -3em;
 }
 
 body .container .start-game .start-game-btn {
   border: none;
   border-radius: 5px 5px;
   height: 3em;
-  width: 7em;
-  font-size: 1rem;
+  width: 13em;
+  font-size: 1.2rem;
+  font-weight: 600;
   background-color: lightyellow;
   -webkit-box-shadow: 5px 5px 5px gray;
           box-shadow: 5px 5px 5px gray;
@@ -36,6 +38,10 @@ body .container .start-game .start-game-btn {
 body .container .start-game .start-game-btn:hover {
   cursor: pointer;
   background-color: linen;
+}
+
+body .container .start-game .active {
+  border: 3px solid green;
 }
 
 body .container .boards-wrapper {
@@ -67,15 +73,12 @@ body .container .boards-wrapper .player-board {
 }
 
 body .container .boards-wrapper .player-board .mouse-in {
-  background-color: blueviolet;
+  background-color: #ffefd5;
+  cursor: pointer;
 }
 
 body .container .boards-wrapper .player-board .mouse-leave {
   background-color: transparent;
-}
-
-body .container .boards-wrapper .player-board .click {
-  background-color: red;
 }
 
 body .container .boards-wrapper .computer-board {
@@ -94,24 +97,74 @@ body .container .boards-wrapper .square {
   height: 2.5em;
 }
 
-body .btn-confirm {
-  margin: 2em;
+body .container .console-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body .container .console-div .confirm-btn {
   border: none;
   border-radius: 5px 5px;
-  height: 3em;
-  width: 7em;
+  height: 3.5em;
+  width: 12em;
+  margin: 1em;
+  padding: 0.5em;
   font-size: 1rem;
+  font-weight: 600;
   background-color: lightyellow;
   -webkit-box-shadow: 5px 5px 5px gray;
           box-shadow: 5px 5px 5px gray;
 }
 
-body .btn-confirm:hover {
+body .container .console-div .confirm-btn:hover {
   cursor: pointer;
   background-color: linen;
 }
 
-body .ship-wrapper {
+body .container .console-div .cancel-btn {
+  display: none;
+  height: 3.5em;
+  width: 6em;
+  margin: 1em;
+  padding: 0.5em;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px 5px;
+  width: 7em;
+}
+
+body .container .console-div .cancel-btn:hover {
+  cursor: pointer;
+  background-color: linen;
+}
+
+body .container .console-div .horizontal-mode-btn {
+  display: none;
+  height: 3.5em;
+  width: 7em;
+  margin: 1em;
+  padding: 0.5em;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px 5px;
+  width: 7em;
+}
+
+body .container .console-div .horizontal-mode-btn:hover {
+  cursor: pointer;
+  background-color: linen;
+}
+
+body .container .instructions h3 {
+  text-align: center;
+}
+
+body .container .ship-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -122,69 +175,71 @@ body .ship-wrapper {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  margin: 3em;
 }
 
-body .ship-wrapper .destroyer {
+body .container .ship-wrapper .boat:hover {
+  cursor: pointer;
+}
+
+body .container .ship-wrapper .destroyer {
   margin: 2em;
 }
 
-body .ship-wrapper .destroyer .ship {
+body .container .ship-wrapper .destroyer .ship {
   background-color: blue;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .ship-wrapper .cruiser {
+body .container .ship-wrapper .cruiser {
   margin: 2em;
 }
 
-body .ship-wrapper .cruiser .ship {
+body .container .ship-wrapper .cruiser .ship {
   background-color: red;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .ship-wrapper .battleship {
+body .container .ship-wrapper .battleship {
   margin: 2em;
 }
 
-body .ship-wrapper .battleship .ship {
+body .container .ship-wrapper .battleship .ship {
   background-color: pink;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .ship-wrapper .submarine {
+body .container .ship-wrapper .submarine {
   margin: 2em;
 }
 
-body .ship-wrapper .submarine .ship {
+body .container .ship-wrapper .submarine .ship {
   background-color: yellow;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .ship-wrapper .selected {
+body .container .ship-wrapper .selected {
   border: 5px solid green;
   border-radius: 5px 5px;
   padding: 0.5em;
 }
 
-body .ship-wrapper .hidden {
+body .container .ship-wrapper .hidden {
   opacity: 0;
 }
 
 body footer {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   height: 2em;
   text-align: center;
+  font-weight: 600;
 }
 
 body footer a {

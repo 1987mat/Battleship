@@ -1,21 +1,36 @@
 /* - Create ships
    - Place player's ships
-
    - Mark the spots as taken
+   - Horizontal and vertical mode
+
    - Randomly place ships for Computer Board
    - Start the game 
+   - Local Storage
 */
 const userBoard = document.querySelector('.player-board');
 const compBoard = document.querySelector('.computer-board');
 const shipsDiv = document.querySelectorAll('.ship-wrapper .boat');
 const startGameBtn = document.querySelector('.start-game-btn');
-const confirmShipBtn = document.querySelector('.btn-confirm');
+const confirmShipBtn = document.querySelector('.confirm-btn');
+const cancelBtn = document.querySelector('.cancel-btn');
+const horizontalModeBtn = document.querySelector('.horizontal-mode-btn');
+
 const playerArr = [];
 const compArr = [];
 
 createBoard(userBoard, playerArr);
 // createBoard(compBoard, compArr);
-// rotatePlayerShips(shipsDiv);
+
+function createBoard(board, arr) {
+  for (let i = 0; i < 100; i++) {
+    const square = document.createElement('div');
+    square.id = i;
+    square.innerHTML = '';
+    square.classList.add('square');
+    arr.push(square.innerHTML);
+    board.appendChild(square);
+  }
+}
 
 let length = null;
 let selectMode = false;
@@ -24,7 +39,9 @@ let selectMode = false;
 shipsDiv.forEach((el) => {
   el.addEventListener('click', (e) => {
     length = e.target.parentElement.id;
-    confirmShipBtn.style.border = '2px solid red';
+    confirmShipBtn.style.border = '2px solid green';
+    cancelBtn.style.display = 'block';
+    horizontalModeBtn.style.display = 'block';
 
     // Highlight selected ship
     if (length == 5) {
@@ -52,6 +69,7 @@ shipsDiv.forEach((el) => {
   });
 });
 
+// Confirm selected ship before placing it
 confirmShipBtn.addEventListener('click', () => {
   confirmShipBtn.style.border = '';
 
@@ -70,35 +88,26 @@ confirmShipBtn.addEventListener('click', () => {
   }
 });
 
-function createBoard(board, arr) {
-  for (let i = 0; i < 100; i++) {
-    const square = document.createElement('div');
-    square.id = i;
-    square.innerHTML = '';
-    square.classList.add('square');
-    arr.push(square.innerHTML);
-    board.appendChild(square);
-  }
-}
-
-// function rotatePlayerShips() {
-//   shipsDiv.forEach((item) => {
-//     item.addEventListener('dblclick', () => {
-//       if (!item.classList.contains('horizontal')) {
-//         item.classList.remove('vertical');
-//         item.classList.add('horizontal');
-//         item.style.transform = 'rotate(90deg)';
-//       } else {
-//         item.classList.remove('horizontal');
-//         item.classList.add('vertical');
-//         item.style.transform = 'none';
-//       }
-//     });
-//   });
-// }
+// Switch between horizonal and vertical mode
+horizontalModeBtn.addEventListener('click', () => {
+  shipsDiv.forEach((ship) => {
+    if (ship.classList.contains('selected')) {
+      if (!ship.classList.contains('horizontal')) {
+        ship.classList.remove('vertical');
+        ship.classList.add('horizontal');
+        ship.style.transform = 'rotate(90deg)';
+      } else {
+        ship.classList.remove('horizontal');
+        ship.classList.add('vertical');
+        ship.style.transform = 'none';
+      }
+    }
+  });
+});
 
 let userBoardArr = Array.from(document.querySelectorAll('.square'));
 
+// MOUSE EVENTS
 function placeShip() {
   userBoardArr.forEach((item) => {
     item.addEventListener('mouseenter', (e) => {
@@ -129,11 +138,6 @@ function mouseIn(target, length) {
         let numOfSquare = 10 * length - 10;
 
         for (let i = index; i <= numOfSquare + index; i += 10) {
-          // Ship doesn't fit the board
-          // if (numOfSquare + index > userBoardArr.length - 1) {
-          //   // console.log('try again');
-          // }
-
           for (let j = 0; j < userBoardArr.length; j++) {
             // Update board in UI
             if (i == userBoardArr[j].id) {
@@ -144,64 +148,6 @@ function mouseIn(target, length) {
         }
       }
     });
-  }
-}
-
-function paintBoard(target, length) {
-  if (!selectMode) {
-    return;
-  } else {
-    let targetID = target.id;
-    // Loop through player array and mark the square with X
-    playerArr.forEach((item, index, arr) => {
-      if (index == targetID) {
-        item = 'X';
-        target.classList.add('click');
-        target.classList.remove('mouse-in');
-        let numOfSquare = 10 * length - 10;
-
-        for (let i = index; i <= numOfSquare + index; i += 10) {
-          // Ship doesn't fit the board
-          if (numOfSquare + index > userBoardArr.length - 1) {
-            // console.log('try again');
-          } else {
-            arr[i] = 'X';
-
-            for (let j = 0; j < userBoardArr.length; j++) {
-              // Update board in UI
-              if (i == userBoardArr[j].id) {
-                // if (userBoardArr[j].classList.contains('occupied')) {
-                //   console.log('taken');
-                //   return;
-                // } else {
-                userBoardArr[j].classList.add('click');
-                userBoardArr[j].classList.remove('mouse-in');
-                userBoardArr[j].classList.add('occupied');
-
-                // }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  // Hide ship after the user place it on the board
-  if (length == 5) {
-    document.querySelector('.destroyer').classList.add('hidden');
-  } else if (length == 4) {
-    document.querySelector('.cruiser').classList.add('hidden');
-  } else if (length == 3) {
-    document.querySelector('.battleship').classList.add('hidden');
-  } else {
-    document.querySelector('.submarine').classList.add('hidden');
-  }
-  selectMode = false;
-
-  // If all ships are placed start the game
-  if (document.getElementsByClassName('hidden').length >= 4) {
-    alert('press start game to play!');
   }
 }
 
@@ -231,6 +177,152 @@ function mouseLeave(target, length) {
       }
     }
   });
+}
+
+function paintBoard(target, length) {
+  if (!selectMode) {
+    return;
+    // If spot is already taken disable click
+  } else if (target.classList.contains('occupied')) {
+    return;
+  } else {
+    let targetID = target.id;
+    // Loop through player array and mark the square for every ship placed
+    playerArr.forEach((item, index, arr) => {
+      if (index == targetID) {
+        let shipColor;
+        // Destroyer
+        if (length == 5) {
+          item = 'D';
+          shipColor = 'blue';
+          renderShip(target, index, arr, shipColor, item);
+          // Cruiser
+        } else if (length == 4) {
+          item = 'C';
+          shipColor = 'red';
+          renderShip(target, index, arr, shipColor, item);
+          // Battleship
+        } else if (length == 3) {
+          item = 'B';
+          shipColor = 'pink';
+          renderShip(target, index, arr, shipColor, item);
+          // Submarine
+        } else {
+          item = 'S';
+          shipColor = 'yellow';
+          renderShip(target, index, arr, shipColor, item);
+        }
+      }
+    });
+  }
+  // If all ships are placed start the game
+  if (document.getElementsByClassName('hidden').length >= 4) {
+    alert('press start game to play!');
+    startGameBtn.classList.add('active');
+  }
+}
+
+function renderShip(target, index, arr, color, item) {
+  let values = [];
+  target.style.background = color;
+  target.classList.remove('mouse-in');
+  let numOfSquare = 10 * length - 10;
+
+  for (let i = index; i <= numOfSquare + index; i += 10) {
+    // User tries to place ship outside the board's limit
+    if (numOfSquare + index > userBoardArr.length - 1) {
+      item = '';
+      target.style.background = '';
+      return;
+    } else {
+      for (let j = 0; j < userBoardArr.length; j++) {
+        // Update board in UI
+        if (i == userBoardArr[j].id) {
+          if (!userBoardArr[j].classList.contains('occupied')) {
+            arr[i] = item;
+            userBoardArr[j].style.background = color;
+            userBoardArr[j].classList.remove('mouse-in');
+            userBoardArr[j].classList.add('occupied');
+
+            // Hide ship after the user place it on the board
+            if (length == 5) {
+              document.querySelector('.destroyer').classList.add('hidden');
+            } else if (length == 4) {
+              document.querySelector('.cruiser').classList.add('hidden');
+            } else if (length == 3) {
+              document.querySelector('.battleship').classList.add('hidden');
+            } else {
+              document.querySelector('.submarine').classList.add('hidden');
+            }
+
+            selectMode = false;
+            values.push(j);
+          }
+        }
+      }
+    }
+  }
+  // Check if the free squares in the board are equal to the length of the ship, if not the ship can't be placed and the player array doesn't change
+  if (values.length !== parseInt(length)) {
+    preventOverlapping(length);
+  }
+}
+
+function preventOverlapping(length) {
+  alert('Ship already placed! Find another position.');
+  if (length == 5) {
+    for (let i = 0; i < playerArr.length; i++) {
+      if (playerArr[i] === 'D') {
+        playerArr[i] = '';
+
+        for (let j = 0; j < userBoardArr.length; j++) {
+          if (i == userBoardArr[j].id) {
+            userBoardArr[j].style.background = '';
+          }
+        }
+      }
+    }
+    document.querySelector('.destroyer').classList.remove('hidden');
+  } else if (length == 4) {
+    for (let i = 0; i < playerArr.length; i++) {
+      if (playerArr[i] === 'C') {
+        playerArr[i] = '';
+
+        for (let j = 0; j < userBoardArr.length; j++) {
+          if (i == userBoardArr[j].id) {
+            userBoardArr[j].style.background = '';
+          }
+        }
+      }
+    }
+    document.querySelector('.cruiser').classList.remove('hidden');
+  } else if (length == 3) {
+    for (let i = 0; i < playerArr.length; i++) {
+      if (playerArr[i] === 'B') {
+        playerArr[i] = '';
+
+        for (let j = 0; j < userBoardArr.length; j++) {
+          if (i == userBoardArr[j].id) {
+            userBoardArr[j].style.background = '';
+          }
+        }
+      }
+    }
+    document.querySelector('.battleship').classList.remove('hidden');
+  } else {
+    for (let i = 0; i < playerArr.length; i++) {
+      if (playerArr[i] === 'S') {
+        playerArr[i] = '';
+
+        for (let j = 0; j < userBoardArr.length; j++) {
+          if (i == userBoardArr[j].id) {
+            userBoardArr[j].style.background = '';
+          }
+        }
+      }
+    }
+    document.querySelector('.submarine').classList.remove('hidden');
+  }
 }
 
 // function placeShip(array, shipArr) {
