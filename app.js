@@ -3,10 +3,14 @@
    - Mark the spots as taken
    - Horizontal and vertical mode
 
+   - Prevent user to place horizontal ship outside border
+   - Cancel / Clear button
    - Randomly place ships for Computer Board
    - Start the game 
    - Local Storage
 */
+
+// Cache DOM
 const userBoard = document.querySelector('.player-board');
 const compBoard = document.querySelector('.computer-board');
 const shipsDiv = document.querySelectorAll('.ship-wrapper .boat');
@@ -34,10 +38,21 @@ function createBoard(board, arr) {
 
 let length = null;
 let selectMode = false;
+let confirmMode = false;
+let horizontalMode = false;
 
 // Select ship to place onto the board
 shipsDiv.forEach((el) => {
   el.addEventListener('click', (e) => {
+    // Disable horizontal mode when user click a different ship
+    shipsDiv.forEach((ship) => {
+      if (ship.classList.contains('horizontal')) {
+        ship.classList.remove('horizontal');
+        ship.style.transform = '';
+        horizontalMode = false;
+      }
+    });
+
     length = e.target.parentElement.id;
     confirmShipBtn.style.border = '2px solid green';
     cancelBtn.style.display = 'block';
@@ -74,8 +89,13 @@ confirmShipBtn.addEventListener('click', () => {
   confirmShipBtn.style.border = '';
 
   if (length && selectMode) {
-    placeShip(length);
+    if (!horizontalMode) {
+      placeShip(length);
+    } else {
+      placeShip(length);
+    }
   }
+
   // Remove selected class after the ship is placed
   if (length == 5) {
     document.querySelector('.destroyer').classList.remove('selected');
@@ -86,6 +106,7 @@ confirmShipBtn.addEventListener('click', () => {
   } else {
     document.querySelector('.submarine').classList.remove('selected');
   }
+  confirmMode = true;
 });
 
 // Switch between horizonal and vertical mode
@@ -93,13 +114,13 @@ horizontalModeBtn.addEventListener('click', () => {
   shipsDiv.forEach((ship) => {
     if (ship.classList.contains('selected')) {
       if (!ship.classList.contains('horizontal')) {
-        ship.classList.remove('vertical');
         ship.classList.add('horizontal');
         ship.style.transform = 'rotate(90deg)';
+        horizontalMode = true;
       } else {
         ship.classList.remove('horizontal');
-        ship.classList.add('vertical');
         ship.style.transform = 'none';
+        horizontalMode = false;
       }
     }
   });
@@ -127,10 +148,17 @@ function placeShip() {
 }
 
 function mouseIn(target, length) {
+  let targetID = parseInt(target.id);
+
   if (!selectMode) {
     return;
-  } else {
-    let targetID = target.id;
+  }
+
+  if (!confirmMode) {
+    return;
+  }
+  // Vertical Mode
+  if (!horizontalMode) {
     playerArr.forEach((item, index) => {
       if (index == targetID) {
         target.classList.add('mouse-in');
@@ -148,42 +176,92 @@ function mouseIn(target, length) {
         }
       }
     });
+    // Horizontal Mode
+  } else {
+    playerArr.forEach((item, index) => {
+      if (index == targetID) {
+        target.classList.add('mouse-in');
+        target.classList.remove('mouse-leave');
+
+        let firstSquare = parseInt(index);
+        let lastSquare = parseInt(length) + parseInt(index);
+        for (let i = firstSquare; i < lastSquare; i++) {
+          for (let j = 0; j < userBoardArr.length; j++) {
+            // Update board in UI
+            if (i == userBoardArr[j].id) {
+              userBoardArr[j].classList.add('mouse-in');
+              userBoardArr[j].classList.remove('mouse-leave');
+            }
+          }
+        }
+      }
+    });
   }
 }
 
 function mouseLeave(target, length) {
   let targetID = target.id;
 
-  playerArr.forEach((item, index) => {
-    if (index == targetID) {
-      target.classList.add('mouse-leave');
-      target.classList.remove('mouse-in');
+  // Vertical Mode
+  if (!horizontalMode) {
+    playerArr.forEach((item, index) => {
+      if (index == targetID) {
+        target.classList.add('mouse-leave');
+        target.classList.remove('mouse-in');
 
-      let numOfSquare = 10 * length - 10;
+        let numOfSquare = 10 * length - 10;
 
-      for (let i = index; i <= numOfSquare + index; i += 10) {
-        // Ship doesn't fit the board
-        if (numOfSquare + index > userBoardArr.length - 1) {
-          // console.log('try again');
-        }
+        for (let i = index; i <= numOfSquare + index; i += 10) {
+          // Ship doesn't fit the board
+          if (numOfSquare + index > userBoardArr.length - 1) {
+            // console.log('try again');
+          }
 
-        for (let j = 0; j < userBoardArr.length; j++) {
-          // Update board in UI
-          if (i == userBoardArr[j].id) {
-            userBoardArr[j].classList.add('mouse-leave');
-            userBoardArr[j].classList.remove('mouse-in');
+          for (let j = 0; j < userBoardArr.length; j++) {
+            // Update board in UI
+            if (i == userBoardArr[j].id) {
+              userBoardArr[j].classList.add('mouse-leave');
+              userBoardArr[j].classList.remove('mouse-in');
+            }
           }
         }
       }
-    }
-  });
+    });
+    // Horizontal Mode
+  } else {
+    playerArr.forEach((item, index) => {
+      if (index == targetID) {
+        target.classList.add('mouse-leave');
+        target.classList.remove('mouse-in');
+
+        let firstSquare = parseInt(index);
+        let lastSquare = parseInt(length) + parseInt(index);
+
+        for (let i = firstSquare; i < lastSquare; i++) {
+          for (let j = 0; j < userBoardArr.length; j++) {
+            // Update board in UI
+            if (i == userBoardArr[j].id) {
+              userBoardArr[j].classList.add('mouse-leave');
+              userBoardArr[j].classList.remove('mouse-in');
+            }
+          }
+        }
+      }
+    });
+  }
 }
 
 function paintBoard(target, length) {
   if (!selectMode) {
     return;
-    // If spot is already taken disable click
-  } else if (target.classList.contains('occupied')) {
+  }
+
+  if (!confirmMode) {
+    return;
+  }
+
+  // If spot is already taken disable click
+  if (target.classList.contains('occupied')) {
     return;
   } else {
     let targetID = target.id;
@@ -256,6 +334,7 @@ function renderShip(target, index, arr, color, item) {
             }
 
             selectMode = false;
+            confirmMode = false;
             values.push(j);
           }
         }
