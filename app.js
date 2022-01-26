@@ -3,8 +3,8 @@
    - Mark the spots as taken
    - Horizontal and vertical mode
    - Prevent user to place horizontal ship outside border
-   
    - Cancel / Clear button
+   
    - Randomly place ships for Computer Board
    - Start the game 
    - Local Storage
@@ -16,8 +16,8 @@ const compBoard = document.querySelector('.computer-board');
 const shipsDiv = document.querySelectorAll('.ship-wrapper .boat');
 const startGameBtn = document.querySelector('.start-game-btn');
 const confirmShipBtn = document.querySelector('.confirm-btn');
-const cancelBtn = document.querySelector('.cancel-btn');
 const horizontalModeBtn = document.querySelector('.horizontal-mode-btn');
+const clearBtn = document.querySelector('.clear-btn');
 
 const playerArr = [];
 const compArr = [];
@@ -36,6 +36,7 @@ function createBoard(board, arr) {
   }
 }
 
+let userBoardArr = Array.from(document.querySelectorAll('.square'));
 let length = null;
 let selectMode = false;
 let confirmMode = false;
@@ -54,8 +55,8 @@ shipsDiv.forEach((el) => {
     });
 
     length = e.target.parentElement.id;
-    confirmShipBtn.style.border = '3px solid green';
-    cancelBtn.style.display = 'block';
+    confirmShipBtn.style.border = '4px solid green';
+    clearBtn.style.display = 'block';
     horizontalModeBtn.style.display = 'block';
 
     // Highlight selected ship
@@ -126,7 +127,42 @@ horizontalModeBtn.addEventListener('click', () => {
   });
 });
 
-let userBoardArr = Array.from(document.querySelectorAll('.square'));
+// Clear board
+clearBtn.addEventListener('click', () => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire('Done!', 'Your board has been cleared.', 'success');
+
+      for (let k in playerArr) {
+        playerArr[k] = '';
+      }
+
+      userBoardArr.forEach((item) => {
+        item.classList.remove('occupied');
+        item.style.background = '';
+      });
+
+      shipsDiv.forEach((el) => {
+        if (el.classList.contains('hidden')) {
+          el.classList.remove('hidden');
+        }
+      });
+
+      length = null;
+      selectMode = false;
+      confirmMode = false;
+      horizontalMode = false;
+    }
+  });
+});
 
 // MOUSE EVENTS
 function placeShip() {
