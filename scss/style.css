@@ -91,6 +91,12 @@ body .container .boards-wrapper .computer-board {
   height: 25em;
 }
 
+body .container .boards-wrapper .comp-square {
+  border: 1px solid black;
+  width: 2.5em;
+  height: 2.5em;
+}
+
 body .container .boards-wrapper .square {
   border: 1px solid black;
   width: 2.5em;

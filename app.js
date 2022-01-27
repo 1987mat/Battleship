@@ -4,9 +4,9 @@
    - Horizontal and vertical mode
    - Prevent user to place horizontal ship outside border
    - Cancel / Clear button
-   
-   - Randomly place ships for Computer Board
-   - Start the game 
+
+   - Start Game / Randomly place ships for Computer Board
+   - Game Logic
    - Local Storage
 */
 
@@ -19,24 +19,38 @@ const confirmShipBtn = document.querySelector('.confirm-btn');
 const horizontalModeBtn = document.querySelector('.horizontal-mode-btn');
 const clearBtn = document.querySelector('.clear-btn');
 
-const playerArr = [];
-const compArr = [];
+let playerArr = [];
+let compArr = [];
 
 createBoard(userBoard, playerArr);
-// createBoard(compBoard, compArr);
+createCompBoard(compBoard, compArr);
 
-function createBoard(board, arr) {
+// Create and display Player Board
+function createBoard(userBoard, playerArr) {
   for (let i = 0; i < 100; i++) {
     const square = document.createElement('div');
     square.id = i;
     square.innerHTML = '';
     square.classList.add('square');
-    arr.push(square.innerHTML);
-    board.appendChild(square);
+    playerArr.push(square.innerHTML);
+    userBoard.appendChild(square);
+  }
+}
+
+// Create and display Comp Board
+function createCompBoard(compBoard, compArr) {
+  for (let i = 0; i < 100; i++) {
+    const compSquare = document.createElement('div');
+    compSquare.id = i;
+    compSquare.innerHTML = '';
+    compSquare.classList.add('comp-square');
+    compArr.push(compSquare.innerHTML);
+    compBoard.appendChild(compSquare);
   }
 }
 
 let userBoardArr = Array.from(document.querySelectorAll('.square'));
+let compBoardArr = Array.from(document.querySelectorAll('.comp-square'));
 let length = null;
 let selectMode = false;
 let confirmMode = false;
@@ -129,39 +143,51 @@ horizontalModeBtn.addEventListener('click', () => {
 
 // Clear board
 clearBtn.addEventListener('click', () => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire('Done!', 'Your board has been cleared.', 'success');
+  playerArr.forEach((item) => {
+    if (item === '') {
+      return;
+    } else {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Done!', 'Your board has been cleared.', 'success');
 
-      for (let k in playerArr) {
-        playerArr[k] = '';
-      }
+          for (let k in playerArr) {
+            playerArr[k] = '';
+          }
 
-      userBoardArr.forEach((item) => {
-        item.classList.remove('occupied');
-        item.style.background = '';
-      });
+          userBoardArr.forEach((item) => {
+            item.classList.remove('occupied');
+            item.style.background = '';
+          });
 
-      shipsDiv.forEach((el) => {
-        if (el.classList.contains('hidden')) {
-          el.classList.remove('hidden');
+          shipsDiv.forEach((el) => {
+            if (el.classList.contains('hidden')) {
+              el.classList.remove('hidden');
+            }
+          });
+
+          length = null;
+          selectMode = false;
+          confirmMode = false;
+          horizontalMode = false;
         }
       });
-
-      length = null;
-      selectMode = false;
-      confirmMode = false;
-      horizontalMode = false;
     }
   });
+});
+
+// Start the game
+startGameBtn.addEventListener('click', () => {
+  // Prompt user to start playing
+  // Implement game logic
 });
 
 // MOUSE EVENTS
@@ -555,32 +581,42 @@ function preventOverlapping(length) {
   }
 }
 
-// function placeShip(array, shipArr) {
-//   const randomPosition = () => Math.floor(Math.random() * (99 - 0 + 1) + 0);
-//   array.splice(randomPosition(), shipArr.length, ...shipArr);
-//   return array;
-// }
+// Comp random ship placing
 
-// function updateBoard(array, board) {
-//   array.forEach((item) => {
-//     if (item !== 'X') {
-//       item = 'O';
-//     }
-//   });
-//   console.log(array);
-//   renderBoard(array, board);
-// }
+const compShipsObj = {
+  compDestroyer: ['d', 'd', 'd', 'd', 'd'],
+  compCruiser: ['c', 'c', 'c', 'c'],
+  compBattleship: ['b', 'b', 'b'],
+  compSub: ['s', 's'],
+};
 
-// function renderBoard(array, board) {
-//   board.innerHTML = '';
-//   for (let i = 0; i < array.length; i++) {
-//     const square = document.createElement('div');
-//     square.id = i;
-//     square.innerHTML = array[i];
-//     square.classList.add('square');
-//     board.appendChild(square);
-//   }
-// }
+for (let k in compShipsObj) {
+  generateRandomShips(compShipsObj[k]);
+}
 
-// placeShip(arrPlayer, ship1);
-// updateBoard(arrPlayer, userBoard);
+function generateRandomShips(ship) {
+  randomIndex = Math.floor(Math.random() * (95 - 4 + 1) + 4);
+  console.log(randomIndex);
+  let lastPosition = randomIndex + ship.length;
+  if (
+    (randomIndex < 10 && lastPosition > 10) ||
+    (randomIndex < 20 && lastPosition > 20) ||
+    (randomIndex < 30 && lastPosition > 30) ||
+    (randomIndex < 40 && lastPosition > 40) ||
+    (randomIndex < 50 && lastPosition > 50) ||
+    (randomIndex < 60 && lastPosition > 60) ||
+    (randomIndex < 70 && lastPosition > 70) ||
+    (randomIndex < 80 && lastPosition > 80) ||
+    (randomIndex < 90 && lastPosition > 90) ||
+    (randomIndex < 100 && lastPosition > 100)
+  ) {
+    console.log('over', randomIndex);
+    generateRandomShips(ship);
+  } else if (Array.isArray(compArr[randomIndex])) {
+    console.log('array');
+    generateRandomShips(ship);
+  } else {
+    compArr[randomIndex] = ship;
+  }
+}
+console.log(compArr);
