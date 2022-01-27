@@ -3,10 +3,10 @@
    - Mark the spots as taken
    - Horizontal and vertical mode
    - Prevent user to place horizontal ship outside border
-   - Cancel / Clear button
-
+   - Clear button
    - Start Game / Randomly place ships for Computer Board
    - Game Logic
+
    - Local Storage
 */
 
@@ -55,6 +55,16 @@ let length = null;
 let selectMode = false;
 let confirmMode = false;
 let horizontalMode = false;
+let compRandomChoice = false;
+let gameStatus;
+
+// Computer fleet
+const compShipsObj = {
+  compDestroyer: ['d', 'd', 'd', 'd', 'd'],
+  compCruiser: ['c', 'c', 'c', 'c'],
+  compBattleship: ['b', 'b', 'b'],
+  compSub: ['s', 's'],
+};
 
 // Select ship to place onto the board
 shipsDiv.forEach((el) => {
@@ -143,6 +153,7 @@ horizontalModeBtn.addEventListener('click', () => {
 
 // Clear board
 clearBtn.addEventListener('click', () => {
+  // Clear Player board
   playerArr.forEach((item) => {
     if (item === '') {
       return;
@@ -182,10 +193,30 @@ clearBtn.addEventListener('click', () => {
       });
     }
   });
+
+  // Clear Comp board
+  for (let i = 0; i < compArr.length; i++) {
+    if (compArr[i] !== '') {
+      compArr[i] = '';
+    }
+  }
+  compRandomChoice = false;
 });
 
 // Start the game
 startGameBtn.addEventListener('click', () => {
+  // Computer has not placed random ships
+  // if (!compRandomChoice) {
+  gameStatus = true;
+  // Loop through object and place random ships on comp board
+  for (let k in compShipsObj) {
+    generateRandomShips(compShipsObj[k]);
+  }
+  // Disable start game button and prevent user to click it more than once
+  // } else {
+  //   startGameBtn.style.pointerEvents = 'none';
+  // }
+
   // Prompt user to start playing
   // Implement game logic
 });
@@ -415,6 +446,7 @@ function paintBoard(target, length) {
   if (document.getElementsByClassName('hidden').length >= 4) {
     alert('press start game to play!');
     startGameBtn.classList.add('active');
+    startGameBtn.style.pointerEvents = 'visible';
   }
 }
 
@@ -581,23 +613,11 @@ function preventOverlapping(length) {
   }
 }
 
-// Comp random ship placing
-
-const compShipsObj = {
-  compDestroyer: ['d', 'd', 'd', 'd', 'd'],
-  compCruiser: ['c', 'c', 'c', 'c'],
-  compBattleship: ['b', 'b', 'b'],
-  compSub: ['s', 's'],
-};
-
-for (let k in compShipsObj) {
-  generateRandomShips(compShipsObj[k]);
-}
-
 function generateRandomShips(ship) {
   randomIndex = Math.floor(Math.random() * (95 - 4 + 1) + 4);
-  console.log(randomIndex);
   let lastPosition = randomIndex + ship.length;
+
+  // Generate again if random index is too close to the board's edge
   if (
     (randomIndex < 10 && lastPosition > 10) ||
     (randomIndex < 20 && lastPosition > 20) ||
@@ -610,13 +630,179 @@ function generateRandomShips(ship) {
     (randomIndex < 90 && lastPosition > 90) ||
     (randomIndex < 100 && lastPosition > 100)
   ) {
-    console.log('over', randomIndex);
     generateRandomShips(ship);
   } else if (Array.isArray(compArr[randomIndex])) {
-    console.log('array');
     generateRandomShips(ship);
+  } else if (compArr[randomIndex] !== '') {
+    generateRandomShips(ship);
+
+    // Make sure that there are enough available slot to place every ship depending on their length
   } else {
-    compArr[randomIndex] = ship;
+    let end = randomIndex + ship.length;
+
+    if (compArr[end] !== '') {
+      generateRandomShips(ship);
+    } else {
+      for (let x = randomIndex; x < end; x++) {
+        compArr[x] = ship[0];
+        compBoardArr.forEach((item, index) => {
+          if (index === x) {
+            item.innerHTML = ship[0];
+          }
+        });
+      }
+      compRandomChoice = true;
+    }
   }
 }
-console.log(compArr);
+
+let countD = 5;
+let countC = 4;
+let countB = 3;
+let countS = 2;
+
+compBoard.addEventListener('click', (e) => {
+  let compTargetID = e.target.id;
+
+  if (compArr[compTargetID] === 'X') {
+    return;
+  }
+
+  if (!gameStatus) {
+    return;
+  }
+
+  if (compArr[compTargetID] === '') {
+    compArr[compTargetID] = 'X';
+    console.log('missed!');
+  } else if (compArr[compTargetID] === 'd') {
+    countD--;
+    if (countD === 0) {
+      console.log('sunk d!');
+      if (checkWinner()) {
+        console.log('winner');
+      }
+    } else if (countD > 0) {
+      compArr[compTargetID] = 'X';
+      console.log('hit d', countD);
+    }
+  } else if (compArr[compTargetID] === 'c') {
+    countC--;
+    if (countC === 0) {
+      console.log('sunk c!');
+      if (checkWinner()) {
+        console.log('winner');
+      }
+    } else if (countC > 0) {
+      compArr[compTargetID] = 'X';
+      console.log('hit c', countC);
+    }
+  } else if (compArr[compTargetID] === 'b') {
+    countB--;
+    if (countB === 0) {
+      console.log('sunk b!');
+      if (checkWinner()) {
+        console.log('winner');
+      }
+    } else if (countB > 0) {
+      compArr[compTargetID] = 'X';
+      console.log('hit b', countB);
+    }
+  } else {
+    countS--;
+    if (countS === 0) {
+      console.log('sunk s!');
+      if (checkWinner()) {
+        console.log('winner');
+      }
+    } else if (countS > 0) {
+      compArr[compTargetID] = 'X';
+      console.log('hit s', countS);
+    }
+  }
+
+  compGame();
+});
+
+function checkWinner() {
+  if (countD === 0 && countC === 0 && countB === 0 && countS === 0) {
+    gameStatus = false;
+    return true;
+  }
+}
+
+function compGame() {
+  randomHit = Math.floor(Math.random() * (99 + 1));
+  console.log(randomHit);
+
+  for (let i = 0; i < playerArr.length; i++) {
+    if (i === randomHit) {
+      // Empty square
+      if (playerArr[i] === '') {
+        console.log('missed');
+        playerArr[i] = 'X';
+        // Already hit
+      } else if (playerArr[i] === 'X') {
+        console.log('rig');
+      }
+    }
+  }
+
+  // playerArr.forEach((item, index) => {
+  //   if (randomHit === index) {
+  //     if (item === 'X') {
+  //       console.log('rigenerate');
+  //       // compGame();
+  //     } else if (item === '') {
+  //       item = 'X';
+  //       console.log('missed', item);
+  //       console.log(playerArr);
+  //     }
+  // } else if (item === 'D') {
+  //   countD--;
+  //   if (countD === 0) {
+  //     console.log('sunk D!');
+  //     if (checkWinner()) {
+  //       console.log('winner');
+  //     }
+  //   } else if (countD > 0) {
+  //     item = 'X';
+  //     console.log('hit D', countD);
+  //   }
+  // } else if (item === 'C') {
+  //   countC--;
+  //   if (countC === 0) {
+  //     console.log('sunk C!');
+  //     if (checkWinner()) {
+  //       console.log('winner');
+  //     }
+  //   } else if (countC > 0) {
+  //     item = 'X';
+  //     console.log('hit C', countC);
+  //   }
+  // } else if (item === 'B') {
+  //   countB--;
+  //   if (countB === 0) {
+  //     console.log('sunk B!');
+  //     if (checkWinner()) {
+  //       console.log('winner');
+  //     }
+  //   } else if (countB > 0) {
+  //     item = 'X';
+  //     console.log('hit B', countB);
+  //   } else if (item === 'S') {
+  //     countS--;
+  //     if (countS === 0) {
+  //       console.log('sunk S!');
+  //       if (checkWinner()) {
+  //         console.log('winner');
+  //       }
+  //     } else if (countS > 0) {
+  //       item = 'X';
+  //       console.log('hit S', countS);
+  //     }
+  //   }
+  // }
+  //   }
+  // });
+}
