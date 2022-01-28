@@ -44,8 +44,18 @@ body .container .start-game .active {
   border: 3px solid green;
 }
 
-body .container .boards-wrapper {
+body .container .msg-status-player {
+  text-align: center;
   margin-top: 2em;
+  height: 2em;
+}
+
+body .container .msg-status-comp {
+  text-align: center;
+}
+
+body .container .boards-wrapper {
+  margin-top: 1em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -97,10 +107,26 @@ body .container .boards-wrapper .comp-square {
   height: 2.5em;
 }
 
+body .container .boards-wrapper .comp-square:hover {
+  cursor: pointer;
+  background-color: lightyellow;
+}
+
 body .container .boards-wrapper .square {
   border: 1px solid black;
   width: 2.5em;
   height: 2.5em;
+}
+
+body .container .boards-wrapper .missed {
+  background-color: maroon;
+}
+
+body .container .boards-wrapper .hit {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 0.5em;
 }
 
 body .container .console-div {
@@ -193,10 +219,10 @@ body .container .ship-wrapper .boat:hover {
 
 body .container .ship-wrapper .destroyer {
   margin: 2em;
+  background-color: lightgreen;
 }
 
 body .container .ship-wrapper .destroyer .ship {
-  background-color: blue;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
@@ -204,10 +230,10 @@ body .container .ship-wrapper .destroyer .ship {
 
 body .container .ship-wrapper .cruiser {
   margin: 2em;
+  background-color: lightgreen;
 }
 
 body .container .ship-wrapper .cruiser .ship {
-  background-color: red;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
@@ -215,10 +241,10 @@ body .container .ship-wrapper .cruiser .ship {
 
 body .container .ship-wrapper .battleship {
   margin: 2em;
+  background-color: lightgreen;
 }
 
 body .container .ship-wrapper .battleship .ship {
-  background-color: pink;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
@@ -226,10 +252,10 @@ body .container .ship-wrapper .battleship .ship {
 
 body .container .ship-wrapper .submarine {
   margin: 2em;
+  background-color: lightgreen;
 }
 
 body .container .ship-wrapper .submarine .ship {
-  background-color: yellow;
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;

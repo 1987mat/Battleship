@@ -48,8 +48,18 @@ body {
       }
     }
 
-    .boards-wrapper {
+    .msg-status-player {
+      text-align: center;
       margin-top: 2em;
+      height: 2em;
+    }
+
+    .msg-status-comp {
+      text-align: center;
+    }
+
+    .boards-wrapper {
+      margin-top: 1em;
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
@@ -85,12 +95,29 @@ body {
         border: 1px solid black;
         width: 2.5em;
         height: 2.5em;
+
+        &:hover {
+          cursor: pointer;
+          background-color: lightyellow;
+        }
       }
 
       .square {
         border: 1px solid black;
         width: 2.5em;
         height: 2.5em;
+      }
+
+      .missed {
+        background-color: maroon;
+      }
+
+      .hit {
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        padding-top: 0.5em;
+        // background-color: mediumseagreen;
       }
     }
 
@@ -175,9 +202,9 @@ body {
 
       .destroyer {
         margin: 2em;
+        background-color: lightgreen;
 
         .ship {
-          background-color: blue;
           border: 1px solid black;
           height: 2.5em;
           width: 2.5em;
@@ -186,9 +213,9 @@ body {
 
       .cruiser {
         margin: 2em;
+        background-color: lightgreen;
 
         .ship {
-          background-color: red;
           border: 1px solid black;
           height: 2.5em;
           width: 2.5em;
@@ -197,9 +224,9 @@ body {
 
       .battleship {
         margin: 2em;
+        background-color: lightgreen;
 
         .ship {
-          background-color: pink;
           border: 1px solid black;
           height: 2.5em;
           width: 2.5em;
@@ -208,9 +235,9 @@ body {
 
       .submarine {
         margin: 2em;
+        background-color: lightgreen;
 
         .ship {
-          background-color: yellow;
           border: 1px solid black;
           height: 2.5em;
           width: 2.5em;
