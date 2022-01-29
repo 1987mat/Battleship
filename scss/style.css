@@ -24,6 +24,7 @@ body .instructions h4 {
 
 body .container .start-game {
   text-align: center;
+  display: none;
 }
 
 body .container .start-game .start-game-btn {

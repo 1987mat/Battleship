@@ -220,6 +220,8 @@ clearBtn.addEventListener('click', () => {
   // Clear display status div
   msgStatusPlayer.innerHTML = '';
   msgStatusComp.innerHTML = '';
+
+  document.querySelector('.start-game').style.display = '';
 });
 
 // Start the game
@@ -459,6 +461,7 @@ function paintBoard(target, length) {
   // If all ships are placed start the game
   if (document.getElementsByClassName('hidden').length >= 4) {
     Swal.fire('Press Start Game to play!');
+    document.querySelector('.start-game').style.display = 'block';
     startGameBtn.classList.add('active');
     startGameBtn.style.pointerEvents = 'visible';
   }
