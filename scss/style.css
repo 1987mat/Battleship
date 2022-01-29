@@ -15,12 +15,15 @@ body {
 
 body header h1 {
   font-size: 2.8rem;
-  margin: 0;
+  margin: 0.2em;
+}
+
+body .instructions h4 {
+  text-align: center;
 }
 
 body .container .start-game {
   text-align: center;
-  margin-top: -3em;
 }
 
 body .container .start-game .start-game-btn {
@@ -49,19 +52,19 @@ body .container .msg-status-player {
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
-  margin-top: 2em;
-  height: 2em;
+  margin-top: 1em;
+  height: 1.5em;
 }
 
 body .container .msg-status-comp {
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
-  height: 2em;
+  height: 1.5em;
 }
 
 body .container .boards-wrapper {
-  margin-top: 1em;
+  margin-top: -2em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -201,10 +204,6 @@ body .container .console-div .horizontal-mode-btn {
 body .container .console-div .horizontal-mode-btn:hover {
   cursor: pointer;
   background-color: linen;
-}
-
-body .container .instructions h3 {
-  text-align: center;
 }
 
 body .container .ship-wrapper {

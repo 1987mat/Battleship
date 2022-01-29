@@ -1,17 +1,3 @@
-/* - Create ships
-   - Place player's ships
-   - Mark the spots as taken
-   - Horizontal and vertical mode
-   - Prevent user to place horizontal ship outside border
-   - Clear button
-   - Start Game / Randomly place ships for Computer Board
-   - Game Logic
-   
-   - !!!! Don't forget to hide comp random squares 
-
-   - Local Storage
-*/
-
 // Cache DOM
 const userBoard = document.querySelector('.player-board');
 const compBoard = document.querySelector('.computer-board');
@@ -155,7 +141,7 @@ horizontalModeBtn.addEventListener('click', () => {
   });
 });
 
-// Clear board
+// Clear boards
 clearBtn.addEventListener('click', () => {
   // Clear Player board
   playerArr.forEach((item) => {
@@ -170,7 +156,6 @@ clearBtn.addEventListener('click', () => {
         confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Done!');
           clearBoards();
         }
       });
@@ -473,7 +458,7 @@ function paintBoard(target, length) {
 
   // If all ships are placed start the game
   if (document.getElementsByClassName('hidden').length >= 4) {
-    Swal.fire('Press Start Game to Play!');
+    Swal.fire('Press Start Game to play!');
     startGameBtn.classList.add('active');
     startGameBtn.style.pointerEvents = 'visible';
   }
@@ -674,11 +659,6 @@ function generateRandomShips(ship) {
     } else {
       for (let x = randomIndex; x < end; x++) {
         compArr[x] = ship[0];
-        compBoardArr.forEach((item, index) => {
-          if (index === x) {
-            item.innerHTML = ship[0];
-          }
-        });
       }
       compRandomChoice = true;
     }
@@ -708,7 +688,6 @@ compBoard.addEventListener('click', (e) => {
   if (compArr[compTargetID] === '') {
     compArr[compTargetID] = 'X';
     compBoardArr[compTargetID].classList.add('missed');
-    console.log('missed!');
     msgStatusPlayer.innerHTML = 'Player Status: MISS!';
   } else if (compArr[compTargetID] === 'd') {
     countD--;
@@ -752,7 +731,6 @@ compBoard.addEventListener('click', (e) => {
   } else if (compArr[compTargetID] === 'b') {
     countB--;
     if (countB === 0) {
-      console.log('sunk b!');
       compBoardArr[compTargetID].classList.add('hit');
       compBoardArr[compTargetID].innerHTML = 'X';
       msgStatusPlayer.innerHTML = 'Player Status: BATTLESHIP SUNK!';
@@ -791,7 +769,6 @@ compBoard.addEventListener('click', (e) => {
       msgStatusPlayer.innerHTML = 'Player Status: HIT!';
     }
   }
-  console.log('clicked');
   compGame();
 });
 
@@ -818,21 +795,19 @@ let unique = (function () {
 
 function compGame() {
   let randomHit = unique();
-  console.log(randomHit);
 
   for (let i = 0; i < playerArr.length; i++) {
     if (i === randomHit) {
       if (playerArr[i] === 'D') {
         countDcomp--;
         if (countDcomp === 0) {
-          console.log('sunk D!');
           userBoardArr[i].classList.add('hit');
           userBoardArr[i].innerHTML = 'X';
           msgStatusComp.innerHTML = 'Computer Status: DESTROYER SUNK!';
           if (checkWinner()) {
             Swal.fire(
               'Game Over!',
-              'Computer Won! Clear the board and play again!',
+              'Computer Won! Clear the boards and play again!',
               'error'
             );
           }
@@ -840,20 +815,18 @@ function compGame() {
           playerArr[i] = 'X';
           userBoardArr[i].classList.add('hit');
           userBoardArr[i].innerHTML = 'X';
-          console.log('hit D', countDcomp);
           msgStatusComp.innerHTML = 'Computer Status: HIT!';
         }
       } else if (playerArr[i] === 'C') {
         countCcomp--;
         if (countCcomp === 0) {
-          console.log('sunk C!');
           userBoardArr[i].classList.add('hit');
           userBoardArr[i].innerHTML = 'X';
           msgStatusComp.innerHTML = 'Computer Status: CARRIER SUNK!';
           if (checkWinner()) {
             Swal.fire(
               'Game Over!',
-              'Computer Won! Clear the board and play again!',
+              'Computer Won! Clear the boards and play again!',
               'error'
             );
           }
@@ -873,7 +846,7 @@ function compGame() {
           if (checkWinner()) {
             Swal.fire(
               'Game Over!',
-              'Computer Won! Clear the board and play again!',
+              'Computer Won! Clear the boards and play again!',
               'error'
             );
           }
@@ -892,7 +865,7 @@ function compGame() {
           if (checkWinner()) {
             Swal.fire(
               'Game Over!',
-              'Computer Won! Clear the board and play again!',
+              'Computer Won! Clear the boards and play again!',
               'error'
             );
           }
@@ -903,7 +876,6 @@ function compGame() {
           msgStatusComp.innerHTML = 'Computer Status: HIT!';
         }
       } else {
-        console.log('missed');
         playerArr[i] = 'X';
         userBoardArr[i].style.background = 'darkred';
         msgStatusComp.innerHTML = 'Computer Status: MISS!';
