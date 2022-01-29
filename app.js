@@ -6,6 +6,8 @@
    - Clear button
    - Start Game / Randomly place ships for Computer Board
    - Game Logic
+   
+   - !!!! Don't forget to hide comp random squares 
 
    - Local Storage
 */
@@ -162,39 +164,52 @@ clearBtn.addEventListener('click', () => {
     } else {
       Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Done!', 'Your board has been cleared.', 'success');
-
-          for (let k in playerArr) {
-            playerArr[k] = '';
-          }
-
-          userBoardArr.forEach((item) => {
-            item.classList.remove('occupied');
-            item.style.background = '';
-          });
-
-          shipsDiv.forEach((el) => {
-            if (el.classList.contains('hidden')) {
-              el.classList.remove('hidden');
-            }
-          });
-
-          length = null;
-          selectMode = false;
-          confirmMode = false;
-          horizontalMode = false;
+          Swal.fire('Done!');
+          clearBoards();
         }
       });
     }
   });
+
+  function clearBoards() {
+    for (let k in playerArr) {
+      playerArr[k] = '';
+    }
+
+    userBoardArr.forEach((item) => {
+      item.classList.remove('occupied');
+      item.style.background = '';
+      if (item.classList.contains('hit')) {
+        item.classList.remove('hit');
+      } else if (item.classList.contains('missed')) {
+        item.classList.remove('missed');
+      }
+
+      if (item.innerHTML === 'X') {
+        item.innerHTML = '';
+      }
+    });
+
+    shipsDiv.forEach((el) => {
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+      }
+      if (el.classList.contains('horizontal')) {
+        el.classList.remove('horizontal');
+      }
+    });
+
+    length = null;
+    selectMode = false;
+    confirmMode = false;
+    horizontalMode = false;
+  }
 
   // Clear Comp board
   for (let i = 0; i < compArr.length; i++) {
@@ -202,25 +217,41 @@ clearBtn.addEventListener('click', () => {
       compArr[i] = '';
     }
   }
+
+  compBoardArr.forEach((item) => {
+    if (item.classList.contains('hit')) {
+      item.classList.remove('hit');
+    } else if (item.classList.contains('missed')) {
+      item.classList.remove('missed');
+    }
+
+    if (item.innerHTML === 'X') {
+      item.innerHTML = '';
+    }
+  });
   compRandomChoice = false;
+  gameStatus = false;
+
+  // Clear display status div
+  msgStatusPlayer.innerHTML = '';
+  msgStatusComp.innerHTML = '';
 });
 
 // Start the game
 startGameBtn.addEventListener('click', () => {
-  // Computer has not placed random ships
-  // if (!compRandomChoice) {
-  gameStatus = true;
-  // Loop through object and place random ships on comp board
-  for (let k in compShipsObj) {
-    generateRandomShips(compShipsObj[k]);
+  // Ready to play
+  if (!compRandomChoice) {
+    gameStatus = true;
+    // Loop through object and place random ships on comp board
+    for (let k in compShipsObj) {
+      generateRandomShips(compShipsObj[k]);
+    }
+    // Disable start game button and prevent user to click it more than once
+  } else {
+    startGameBtn.style.pointerEvents = 'none';
   }
-  // Disable start game button and prevent user to click it more than once
-  // } else {
-  //   startGameBtn.style.pointerEvents = 'none';
-  // }
-
-  // Prompt user to start playing
-  // Implement game logic
+  startGameBtn.style.pointerEvents = 'none';
+  startGameBtn.style.border = 'none';
 });
 
 // MOUSE EVENTS
@@ -383,7 +414,7 @@ function paintBoard(target, length) {
       // Loop through player array and mark the square for every ship placed
       playerArr.forEach((item, index, arr) => {
         if (index == targetID) {
-          let shipColor = 'lightgreen';
+          let shipColor = '#CD853F';
           // Destroyer
           if (length == 5) {
             item = 'D';
@@ -417,26 +448,22 @@ function paintBoard(target, length) {
       // Loop through player array and mark the square for every ship placed
       playerArr.forEach((item, index, arr) => {
         if (index == targetID) {
-          let shipColor = 'lightgreen';
+          let shipColor = '#CD853F';
           // Destroyer
           if (length == 5) {
             item = 'D';
-
             renderShip(target, index, arr, shipColor, item);
             // Cruiser
           } else if (length == 4) {
             item = 'C';
-
             renderShip(target, index, arr, shipColor, item);
             // Battleship
           } else if (length == 3) {
             item = 'B';
-
             renderShip(target, index, arr, shipColor, item);
             // Submarine
           } else {
             item = 'S';
-
             renderShip(target, index, arr, shipColor, item);
           }
         }
@@ -446,7 +473,7 @@ function paintBoard(target, length) {
 
   // If all ships are placed start the game
   if (document.getElementsByClassName('hidden').length >= 4) {
-    alert('press start game to play!');
+    Swal.fire('Press Start Game to Play!');
     startGameBtn.classList.add('active');
     startGameBtn.style.pointerEvents = 'visible';
   }
@@ -682,13 +709,13 @@ compBoard.addEventListener('click', (e) => {
     compArr[compTargetID] = 'X';
     compBoardArr[compTargetID].classList.add('missed');
     console.log('missed!');
-    msgStatusPlayer.innerHTML = 'Player Status: Miss!';
+    msgStatusPlayer.innerHTML = 'Player Status: MISS!';
   } else if (compArr[compTargetID] === 'd') {
     countD--;
     if (countD === 0) {
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Destroyer Sunk!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'Player Status: DESTROYER!';
       if (checkWinner()) {
         Swal.fire(
           'Good job!',
@@ -698,17 +725,16 @@ compBoard.addEventListener('click', (e) => {
       }
     } else if (countD > 0) {
       compArr[compTargetID] = 'X';
-      console.log('hit d', countD);
       compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Hit!';
+      msgStatusPlayer.innerHTML = 'Player Status: HIT!';
     }
   } else if (compArr[compTargetID] === 'c') {
     countC--;
     if (countC === 0) {
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Carrier Sunk!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'Player Status: CARRIER SUNK!';
 
       if (checkWinner()) {
         Swal.fire(
@@ -719,17 +745,17 @@ compBoard.addEventListener('click', (e) => {
       }
     } else if (countC > 0) {
       compArr[compTargetID] = 'X';
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Hit!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'Player Status: HIT!';
     }
   } else if (compArr[compTargetID] === 'b') {
     countB--;
     if (countB === 0) {
       console.log('sunk b!');
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Battleship Sunk!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'Player Status: BATTLESHIP SUNK!';
 
       if (checkWinner()) {
         Swal.fire(
@@ -740,16 +766,16 @@ compBoard.addEventListener('click', (e) => {
       }
     } else if (countB > 0) {
       compArr[compTargetID] = 'X';
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'PlayerStatus: Hit!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'PlayerStatus: HIT!';
     }
   } else {
     countS--;
     if (countS === 0) {
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Submarine Sunk!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'Player Status: SUBMARINE SUNK!';
 
       if (checkWinner()) {
         Swal.fire(
@@ -760,93 +786,127 @@ compBoard.addEventListener('click', (e) => {
       }
     } else if (countS > 0) {
       compArr[compTargetID] = 'X';
-      compBoardArr[compTargetID].innerHTML = 'X';
       compBoardArr[compTargetID].classList.add('hit');
-      msgStatusPlayer.innerHTML = 'Player Status: Hit!';
+      compBoardArr[compTargetID].innerHTML = 'X';
+      msgStatusPlayer.innerHTML = 'Player Status: HIT!';
     }
   }
   console.log('clicked');
   compGame();
 });
 
+let unique = (function () {
+  // wrap everything in an IIFE
+  let arr = []; // the array that contains the possible values
+  for (
+    let i = 0;
+    i < 99;
+    i++ // fill it
+  )
+    arr.push(i);
+
+  return function () {
+    // return the function that returns random unique numbers
+    if (!arr.length)
+      // if there is no more numbers in the array
+      return alert('No more!'); // alert and return undefined
+
+    let rand = Math.floor(Math.random() * arr.length); // otherwise choose a random index from the array
+    return arr.splice(rand, 1)[0]; // cut out the number at that index and return it
+  };
+})();
+
 function compGame() {
-  randomHit = Math.floor(Math.random() * (100 - 0) + 0);
+  let randomHit = unique();
   console.log(randomHit);
 
   for (let i = 0; i < playerArr.length; i++) {
     if (i === randomHit) {
-      if (playerArr[i] !== 'X') {
-        if (playerArr[i] === '') {
-          console.log('missed');
+      if (playerArr[i] === 'D') {
+        countDcomp--;
+        if (countDcomp === 0) {
+          console.log('sunk D!');
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          msgStatusComp.innerHTML = 'Computer Status: DESTROYER SUNK!';
+          if (checkWinner()) {
+            Swal.fire(
+              'Game Over!',
+              'Computer Won! Clear the board and play again!',
+              'error'
+            );
+          }
+        } else if (countDcomp > 0) {
           playerArr[i] = 'X';
-          userBoardArr[i].style.background = 'darkred';
-        } else if (playerArr[i] === 'D') {
-          countDcomp--;
-          if (countDcomp === 0) {
-            console.log('sunk D!');
-            userBoardArr[i].innerHTML = 'X';
-            msgStatusComp.innerHTML = 'Computer Status: Destroyer Sunk!';
-            if (checkWinner()) {
-              console.log('winner');
-            }
-          } else if (countDcomp > 0) {
-            playerArr[i] = 'X';
-            userBoardArr[i].innerHTML = 'X';
-            console.log('hit D', countDcomp);
-            msgStatusComp.innerHTML = 'Computer Status: Hit!';
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          console.log('hit D', countDcomp);
+          msgStatusComp.innerHTML = 'Computer Status: HIT!';
+        }
+      } else if (playerArr[i] === 'C') {
+        countCcomp--;
+        if (countCcomp === 0) {
+          console.log('sunk C!');
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          msgStatusComp.innerHTML = 'Computer Status: CARRIER SUNK!';
+          if (checkWinner()) {
+            Swal.fire(
+              'Game Over!',
+              'Computer Won! Clear the board and play again!',
+              'error'
+            );
           }
-        } else if (playerArr[i] === 'C') {
-          countCcomp--;
-          if (countCcomp === 0) {
-            console.log('sunk C!');
-            userBoardArr[i].innerHTML = 'X';
-            msgStatusComp.innerHTML = 'Computer Status: Carrier Sunk!';
-            if (checkWinner()) {
-              console.log('winner');
-            }
-          } else if (countCcomp > 0) {
-            playerArr[i] = 'X';
-            userBoardArr[i].innerHTML = 'X';
-            msgStatusComp.innerHTML = 'Computer Status: Hit!';
-          }
-        } else if (playerArr[i] === 'B') {
-          countBcomp--;
-          if (countBcomp === 0) {
-            userBoardArr[i].innerHTML = 'X';
-            msgStatusComp.innerHTML = 'Computer Status: Battleship Sunk!';
-
-            if (checkWinner()) {
-              console.log('winner');
-            }
-          } else if (countBcomp > 0) {
-            playerArr[i] = 'X';
-            userBoardArr[i].innerHTML = 'X';
-            msgStatusComp.innerHTML = 'Computer Status: Hit!';
-          } else if (playerArr[i] === 'S') {
-            countScomp--;
-            if (countScomp === 0) {
-              userBoardArr[i].innerHTML = 'X';
-              msgStatusComp.innerHTML = 'Computer Status: Submarine Sunk!';
-
-              if (checkWinner()) {
-                console.log('winner');
-              }
-            } else if (countScomp > 0) {
-              playerArr[i] = 'X';
-              userBoardArr[i].innerHTML = 'X';
-              msgStatusComp.innerHTML = 'Computer Status: Hit!';
-              console.log('s hit');
-            }
-          }
-        } else {
-          console.log('missed');
+        } else if (countCcomp > 0) {
           playerArr[i] = 'X';
-          userBoardArr[i].style.background = 'darkred';
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          msgStatusComp.innerHTML = 'Computer Status: HIT!';
+        }
+      } else if (playerArr[i] === 'B') {
+        countBcomp--;
+        if (countBcomp === 0) {
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          msgStatusComp.innerHTML = 'Computer Status: BATTLESHIP SUNK!';
+
+          if (checkWinner()) {
+            Swal.fire(
+              'Game Over!',
+              'Computer Won! Clear the board and play again!',
+              'error'
+            );
+          }
+        } else if (countBcomp > 0) {
+          playerArr[i] = 'X';
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          msgStatusComp.innerHTML = 'Computer Status: HIT!';
+        }
+      } else if (playerArr[i] === 'S') {
+        countScomp--;
+        if (countScomp === 0) {
+          userBoardArr[i].classList.add('hit');
+          msgStatusComp.innerHTML = 'Computer Status: SUBMARINE SUNK!';
+
+          if (checkWinner()) {
+            Swal.fire(
+              'Game Over!',
+              'Computer Won! Clear the board and play again!',
+              'error'
+            );
+          }
+        } else if (countScomp > 0) {
+          playerArr[i] = 'X';
+          userBoardArr[i].classList.add('hit');
+          userBoardArr[i].innerHTML = 'X';
+          msgStatusComp.innerHTML = 'Computer Status: HIT!';
         }
       } else {
-        console.log('regenerate', randomHit);
-        compGame();
-        console.log(playerArr);
+        console.log('missed');
+        playerArr[i] = 'X';
+        userBoardArr[i].style.background = 'darkred';
+        msgStatusComp.innerHTML = 'Computer Status: MISS!';
       }
     }
   }

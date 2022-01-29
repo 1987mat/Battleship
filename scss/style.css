@@ -33,6 +33,7 @@ body .container .start-game .start-game-btn {
   background-color: lightyellow;
   -webkit-box-shadow: 5px 5px 5px gray;
           box-shadow: 5px 5px 5px gray;
+  pointer-events: none;
 }
 
 body .container .start-game .start-game-btn:hover {
@@ -45,13 +46,18 @@ body .container .start-game .active {
 }
 
 body .container .msg-status-player {
+  font-size: 1rem;
+  font-weight: 600;
   text-align: center;
   margin-top: 2em;
   height: 2em;
 }
 
 body .container .msg-status-comp {
+  font-size: 1rem;
+  font-weight: 600;
   text-align: center;
+  height: 2em;
 }
 
 body .container .boards-wrapper {
@@ -127,6 +133,7 @@ body .container .boards-wrapper .hit {
   font-weight: 600;
   text-align: center;
   padding-top: 0.5em;
+  background-color: mediumseagreen !important;
 }
 
 body .container .console-div {
@@ -219,7 +226,7 @@ body .container .ship-wrapper .boat:hover {
 
 body .container .ship-wrapper .destroyer {
   margin: 2em;
-  background-color: lightgreen;
+  background-color: #cd853f;
 }
 
 body .container .ship-wrapper .destroyer .ship {
@@ -230,7 +237,7 @@ body .container .ship-wrapper .destroyer .ship {
 
 body .container .ship-wrapper .cruiser {
   margin: 2em;
-  background-color: lightgreen;
+  background-color: #cd853f;
 }
 
 body .container .ship-wrapper .cruiser .ship {
@@ -241,7 +248,7 @@ body .container .ship-wrapper .cruiser .ship {
 
 body .container .ship-wrapper .battleship {
   margin: 2em;
-  background-color: lightgreen;
+  background-color: #cd853f;
 }
 
 body .container .ship-wrapper .battleship .ship {
@@ -252,7 +259,7 @@ body .container .ship-wrapper .battleship .ship {
 
 body .container .ship-wrapper .submarine {
   margin: 2em;
-  background-color: lightgreen;
+  background-color: #cd853f;
 }
 
 body .container .ship-wrapper .submarine .ship {
