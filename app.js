@@ -221,7 +221,10 @@ clearBtn.addEventListener('click', () => {
   msgStatusPlayer.innerHTML = '';
   msgStatusComp.innerHTML = '';
 
+  // Show start game button div
   document.querySelector('.start-game').style.display = '';
+  // Show instructions div
+  document.querySelector('.instructions').style.display = 'block';
 });
 
 // Start the game
@@ -239,6 +242,7 @@ startGameBtn.addEventListener('click', () => {
   }
   startGameBtn.style.pointerEvents = 'none';
   startGameBtn.style.border = 'none';
+  document.querySelector('.start-game').style.display = 'none';
 });
 
 // MOUSE EVENTS
@@ -460,7 +464,10 @@ function paintBoard(target, length) {
 
   // If all ships are placed start the game
   if (document.getElementsByClassName('hidden').length >= 4) {
+    // Hide instructions div
+    document.querySelector('.instructions').style.display = 'none';
     Swal.fire('Press Start Game to play!');
+    // Show Start Game button
     document.querySelector('.start-game').style.display = 'block';
     startGameBtn.classList.add('active');
     startGameBtn.style.pointerEvents = 'visible';
@@ -775,29 +782,23 @@ compBoard.addEventListener('click', (e) => {
   compGame();
 });
 
+// Generate random unique values for Comp choice
 let unique = (function () {
-  // wrap everything in an IIFE
-  let arr = []; // the array that contains the possible values
-  for (
-    let i = 0;
-    i < 99;
-    i++ // fill it
-  )
-    arr.push(i);
+  let arr = [];
+  for (let i = 0; i < 99; i++) arr.push(i);
 
   return function () {
-    // return the function that returns random unique numbers
-    if (!arr.length)
-      // if there is no more numbers in the array
-      return alert('No more!'); // alert and return undefined
-
-    let rand = Math.floor(Math.random() * arr.length); // otherwise choose a random index from the array
-    return arr.splice(rand, 1)[0]; // cut out the number at that index and return it
+    if (!arr.length) return;
+    //choose a random index from the array
+    let rand = Math.floor(Math.random() * arr.length);
+    // cut out the number at that index and return it
+    return arr.splice(rand, 1)[0];
   };
 })();
 
 function compGame() {
   let randomHit = unique();
+  console.log(randomHit);
 
   for (let i = 0; i < playerArr.length; i++) {
     if (i === randomHit) {

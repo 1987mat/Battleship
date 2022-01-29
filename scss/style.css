@@ -46,7 +46,7 @@ body .container .start-game .start-game-btn:hover {
 }
 
 body .container .start-game .active {
-  border: 3px solid green;
+  background-color: #adff2f;
 }
 
 body .container .msg-status-player {
