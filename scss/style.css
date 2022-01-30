@@ -45,8 +45,9 @@ body .container .start-game .start-game-btn:hover {
   background-color: linen;
 }
 
-body .container .start-game .active {
-  background-color: #adff2f;
+body .container .start-game .start-game-btn:active {
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
 }
 
 body .container .msg-status-player {
@@ -169,6 +170,11 @@ body .container .console-div .confirm-btn:hover {
   background-color: linen;
 }
 
+body .container .console-div .confirm-btn:active {
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+}
+
 body .container .console-div .clear-btn {
   display: none;
   height: 3.5em;
@@ -188,6 +194,11 @@ body .container .console-div .clear-btn:hover {
   background-color: linen;
 }
 
+body .container .console-div .clear-btn:active {
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+}
+
 body .container .console-div .horizontal-mode-btn {
   display: none;
   height: 3.5em;
@@ -205,6 +216,11 @@ body .container .console-div .horizontal-mode-btn {
 body .container .console-div .horizontal-mode-btn:hover {
   cursor: pointer;
   background-color: linen;
+}
+
+body .container .console-div .horizontal-mode-btn:active {
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
 }
 
 body .container .ship-wrapper {

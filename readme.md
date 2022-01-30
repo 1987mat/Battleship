@@ -1,3 +1,3 @@
 Battleship Game
 
-HTML | SCSS | JS |
+HTML | SCSS | JS | ES6 Modules

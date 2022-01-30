@@ -48,9 +48,9 @@ body {
           cursor: pointer;
           background-color: linen;
         }
-      }
-      .active {
-        background-color: #adff2f;
+        &:active {
+          transform: translateY(4px);
+        }
       }
     }
 
@@ -153,6 +153,10 @@ body {
           cursor: pointer;
           background-color: linen;
         }
+
+        &:active {
+          transform: translateY(4px);
+        }
       }
 
       .clear-btn {
@@ -172,6 +176,10 @@ body {
           cursor: pointer;
           background-color: linen;
         }
+
+        &:active {
+          transform: translateY(4px);
+        }
       }
 
       .horizontal-mode-btn {
@@ -190,6 +198,10 @@ body {
         &:hover {
           cursor: pointer;
           background-color: linen;
+        }
+
+        &:active {
+          transform: translateY(4px);
         }
       }
     }
