@@ -1,0 +1,11 @@
+$phone_port: 320px;
+$phone_land: 576px;
+$tablet: 768px;
+$desktop: 992px;
+$large: 1200px;
+
+@mixin responsive($device) {
+  @media only screen and (min-width: #{$device}) {
+    @content;
+  }
+}

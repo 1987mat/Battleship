@@ -5,7 +5,35 @@
           box-sizing: border-box;
 }
 
-body {
+html {
+  /* MEDIA QUERIES */
+}
+
+@media only screen and (min-width: 320px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  html {
+    font-size: 60%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 80%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  html {
+    font-size: 100%;
+  }
+}
+
+html body {
   width: 100%;
   height: 100vh;
   background: #af8b2d;
@@ -13,21 +41,45 @@ body {
   background: linear-gradient(90deg, #af8b2d 0%, #add4a6 100%);
 }
 
-body header h1 {
+html body header h1 {
   font-size: 2.8rem;
   margin: 0.2em;
 }
 
-body .instructions h4 {
+@media only screen and (min-width: 320px) {
+  html body header h1 {
+    opacity: 0;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  html body header h1 {
+    opacity: 1;
+  }
+}
+
+html body .instructions h4 {
   text-align: center;
 }
 
-body .container .start-game {
+@media only screen and (min-width: 320px) {
+  html body .instructions h4 {
+    width: 95%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  html body .instructions h4 {
+    width: 100%;
+  }
+}
+
+html body .container .start-game {
   text-align: center;
   display: none;
 }
 
-body .container .start-game .start-game-btn {
+html body .container .start-game .start-game-btn {
   border: none;
   border-radius: 5px 5px;
   height: 3em;
@@ -40,17 +92,17 @@ body .container .start-game .start-game-btn {
   pointer-events: none;
 }
 
-body .container .start-game .start-game-btn:hover {
+html body .container .start-game .start-game-btn:hover {
   cursor: pointer;
   background-color: linen;
 }
 
-body .container .start-game .start-game-btn:active {
+html body .container .start-game .start-game-btn:active {
   -webkit-transform: translateY(4px);
           transform: translateY(4px);
 }
 
-body .container .msg-status-player {
+html body .container .msg-status-player {
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
@@ -58,14 +110,14 @@ body .container .msg-status-player {
   height: 1.5em;
 }
 
-body .container .msg-status-comp {
+html body .container .msg-status-comp {
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
   height: 1.5em;
 }
 
-body .container .boards-wrapper {
+html body .container .boards-wrapper {
   margin-top: -2em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -79,11 +131,33 @@ body .container .boards-wrapper {
           justify-content: space-evenly;
 }
 
-body .container .boards-wrapper h3 {
+@media only screen and (min-width: 320px) {
+  html body .container .boards-wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-bottom: 1em;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  html body .container .boards-wrapper {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+html body .container .boards-wrapper h3 {
   text-align: center;
 }
 
-body .container .boards-wrapper .player-board {
+html body .container .boards-wrapper .player-board {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -93,16 +167,16 @@ body .container .boards-wrapper .player-board {
   height: 25em;
 }
 
-body .container .boards-wrapper .player-board .mouse-in {
+html body .container .boards-wrapper .player-board .mouse-in {
   background-color: #ffefd5;
   cursor: pointer;
 }
 
-body .container .boards-wrapper .player-board .mouse-leave {
+html body .container .boards-wrapper .player-board .mouse-leave {
   background-color: transparent;
 }
 
-body .container .boards-wrapper .computer-board {
+html body .container .boards-wrapper .computer-board {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -112,28 +186,28 @@ body .container .boards-wrapper .computer-board {
   height: 25em;
 }
 
-body .container .boards-wrapper .comp-square {
+html body .container .boards-wrapper .comp-square {
   border: 1px solid black;
   width: 2.5em;
   height: 2.5em;
 }
 
-body .container .boards-wrapper .comp-square:hover {
+html body .container .boards-wrapper .comp-square:hover {
   cursor: pointer;
   background-color: lightyellow;
 }
 
-body .container .boards-wrapper .square {
+html body .container .boards-wrapper .square {
   border: 1px solid black;
   width: 2.5em;
   height: 2.5em;
 }
 
-body .container .boards-wrapper .missed {
+html body .container .boards-wrapper .missed {
   background-color: maroon;
 }
 
-body .container .boards-wrapper .hit {
+html body .container .boards-wrapper .hit {
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
@@ -141,7 +215,7 @@ body .container .boards-wrapper .hit {
   background-color: mediumseagreen !important;
 }
 
-body .container .console-div {
+html body .container .console-div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -151,7 +225,7 @@ body .container .console-div {
           justify-content: center;
 }
 
-body .container .console-div .confirm-btn {
+html body .container .console-div .confirm-btn {
   border: none;
   border-radius: 5px 5px;
   height: 3.5em;
@@ -165,17 +239,17 @@ body .container .console-div .confirm-btn {
           box-shadow: 5px 5px 5px gray;
 }
 
-body .container .console-div .confirm-btn:hover {
+html body .container .console-div .confirm-btn:hover {
   cursor: pointer;
   background-color: linen;
 }
 
-body .container .console-div .confirm-btn:active {
+html body .container .console-div .confirm-btn:active {
   -webkit-transform: translateY(4px);
           transform: translateY(4px);
 }
 
-body .container .console-div .clear-btn {
+html body .container .console-div .clear-btn {
   display: none;
   height: 3.5em;
   width: 6em;
@@ -189,17 +263,17 @@ body .container .console-div .clear-btn {
   width: 7em;
 }
 
-body .container .console-div .clear-btn:hover {
+html body .container .console-div .clear-btn:hover {
   cursor: pointer;
   background-color: linen;
 }
 
-body .container .console-div .clear-btn:active {
+html body .container .console-div .clear-btn:active {
   -webkit-transform: translateY(4px);
           transform: translateY(4px);
 }
 
-body .container .console-div .horizontal-mode-btn {
+html body .container .console-div .horizontal-mode-btn {
   display: none;
   height: 3.5em;
   width: 7em;
@@ -213,17 +287,17 @@ body .container .console-div .horizontal-mode-btn {
   width: 7em;
 }
 
-body .container .console-div .horizontal-mode-btn:hover {
+html body .container .console-div .horizontal-mode-btn:hover {
   cursor: pointer;
   background-color: linen;
 }
 
-body .container .console-div .horizontal-mode-btn:active {
+html body .container .console-div .horizontal-mode-btn:active {
   -webkit-transform: translateY(4px);
           transform: translateY(4px);
 }
 
-body .container .ship-wrapper {
+html body .container .ship-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -236,72 +310,72 @@ body .container .ship-wrapper {
           justify-content: space-evenly;
 }
 
-body .container .ship-wrapper .boat:hover {
+html body .container .ship-wrapper .boat:hover {
   cursor: pointer;
 }
 
-body .container .ship-wrapper .destroyer {
+html body .container .ship-wrapper .destroyer {
   margin: 2em;
   background-color: #cd853f;
 }
 
-body .container .ship-wrapper .destroyer .ship {
+html body .container .ship-wrapper .destroyer .ship {
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .container .ship-wrapper .cruiser {
+html body .container .ship-wrapper .cruiser {
   margin: 2em;
   background-color: #cd853f;
 }
 
-body .container .ship-wrapper .cruiser .ship {
+html body .container .ship-wrapper .cruiser .ship {
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .container .ship-wrapper .battleship {
+html body .container .ship-wrapper .battleship {
   margin: 2em;
   background-color: #cd853f;
 }
 
-body .container .ship-wrapper .battleship .ship {
+html body .container .ship-wrapper .battleship .ship {
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .container .ship-wrapper .submarine {
+html body .container .ship-wrapper .submarine {
   margin: 2em;
   background-color: #cd853f;
 }
 
-body .container .ship-wrapper .submarine .ship {
+html body .container .ship-wrapper .submarine .ship {
   border: 1px solid black;
   height: 2.5em;
   width: 2.5em;
 }
 
-body .container .ship-wrapper .selected {
-  border: 4px solid green;
+html body .container .ship-wrapper .selected {
+  border: 2px solid green;
   border-radius: 5px 5px;
   padding: 0.5em;
 }
 
-body .container .ship-wrapper .hidden {
+html body .container .ship-wrapper .hidden {
   opacity: 0;
 }
 
-body footer {
+html body footer {
   width: 100%;
   height: 2em;
   text-align: center;
   font-weight: 600;
 }
 
-body footer a {
+html body footer a {
   text-decoration: none;
   color: black;
 }

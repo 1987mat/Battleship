@@ -23,7 +23,7 @@ const compGameBoard = Gameboard(compBoard, compArr, 'comp-square');
 playerGameBoard.createBoard();
 compGameBoard.createBoard();
 
-// Convert player and computer board into array of divs
+// Convert player and computer board into array of square divs
 let userBoardArr = Array.from(document.querySelectorAll('.square'));
 let compBoardArr = Array.from(document.querySelectorAll('.comp-square'));
 
@@ -49,7 +49,7 @@ shipsDiv.forEach((el) => {
     });
 
     length = e.target.parentElement.id;
-    confirmShipBtn.style.border = '4px solid green';
+    confirmShipBtn.style.border = '2px solid green';
     clearBtn.style.display = 'block';
     horizontalModeBtn.style.display = 'block';
 
@@ -132,6 +132,7 @@ clearBtn.addEventListener('click', () => {
         confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.isConfirmed) {
+          // Clear boards
           playerGameBoard.clearBoard();
           compGameBoard.clearBoard();
 
@@ -191,7 +192,7 @@ clearBtn.addEventListener('click', () => {
   });
 });
 
-// Computer fleet
+// Computer's fleet
 const compShipsObj = {
   compDestroyer: ['d', 'd', 'd', 'd', 'd'],
   compCruiser: ['c', 'c', 'c', 'c'],
@@ -651,6 +652,7 @@ function generateRandomShips(ship) {
 }
 
 // GAME LOGIC
+// Declare count variables for every single ship for both Player and Computer
 let countD = 5,
   countDcomp = 5;
 let countC = 4,
@@ -660,7 +662,7 @@ let countB = 3,
 let countS = 2,
   countScomp = 2;
 
-// User clicks comp board
+// User clicks on computer board
 compBoard.addEventListener('click', (e) => {
   let compTargetID = e.target.id;
 
@@ -775,7 +777,6 @@ let unique = (function () {
 
 function compGame() {
   let randomHit = unique();
-  console.log(randomHit);
 
   for (let i = 0; i < playerArr.length; i++) {
     if (i === randomHit) {
@@ -877,3 +878,5 @@ function checkWinner() {
     return true;
   }
 }
+
+

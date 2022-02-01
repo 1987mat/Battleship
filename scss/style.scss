@@ -1,3 +1,4 @@
+@import 'mediaQueries';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 * {
@@ -5,283 +6,328 @@
   box-sizing: border-box;
 }
 
-body {
-  width: 100%;
-  height: 100vh;
-  background: rgb(175, 139, 45);
-  background: linear-gradient(
-    90deg,
-    rgba(175, 139, 45, 1) 0%,
-    rgba(173, 212, 166, 1) 100%
-  );
-
-  header {
-    h1 {
-      font-size: 2.8rem;
-      margin: 0.2em;
-    }
+html {
+  /* MEDIA QUERIES */
+  @include responsive($phone_port) {
+    font-size: 50%;
   }
 
-  .instructions {
-    h4 {
-      text-align: center;
-    }
+  @include responsive($phone_land) {
+    font-size: 60%;
   }
 
-  .container {
-    .start-game {
-      text-align: center;
-      display: none;
-
-      .start-game-btn {
-        border: none;
-        border-radius: 5px 5px;
-        height: 3em;
-        width: 13em;
-        font-size: 1.2rem;
-        font-weight: 600;
-        background-color: lightyellow;
-        box-shadow: 5px 5px 5px gray;
-        pointer-events: none;
-
-        &:hover {
-          cursor: pointer;
-          background-color: linen;
-        }
-        &:active {
-          transform: translateY(4px);
-        }
-      }
-    }
-
-    .msg-status-player {
-      font-size: 1rem;
-      font-weight: 600;
-      text-align: center;
-      margin-top: 1em;
-      height: 1.5em;
-    }
-
-    .msg-status-comp {
-      font-size: 1rem;
-      font-weight: 600;
-      text-align: center;
-      height: 1.5em;
-    }
-
-    .boards-wrapper {
-      margin-top: -2em;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-
-      h3 {
-        text-align: center;
-      }
-
-      .player-board {
-        display: flex;
-        flex-wrap: wrap;
-        width: 25em;
-        height: 25em;
-
-        .mouse-in {
-          background-color: #ffefd5;
-          cursor: pointer;
-        }
-
-        .mouse-leave {
-          background-color: transparent;
-        }
-      }
-
-      .computer-board {
-        display: flex;
-        flex-wrap: wrap;
-        width: 25em;
-        height: 25em;
-      }
-
-      .comp-square {
-        border: 1px solid black;
-        width: 2.5em;
-        height: 2.5em;
-
-        &:hover {
-          cursor: pointer;
-          background-color: lightyellow;
-        }
-      }
-
-      .square {
-        border: 1px solid black;
-        width: 2.5em;
-        height: 2.5em;
-      }
-
-      .missed {
-        background-color: maroon;
-      }
-
-      .hit {
-        font-size: 1rem;
-        font-weight: 600;
-        text-align: center;
-        padding-top: 0.5em;
-        background-color: mediumseagreen !important;
-      }
-    }
-
-    .console-div {
-      display: flex;
-      width: 100%;
-      justify-content: center;
-
-      .confirm-btn {
-        border: none;
-        border-radius: 5px 5px;
-        height: 3.5em;
-        width: 12em;
-        margin: 1em;
-        padding: 0.5em;
-        font-size: 1rem;
-        font-weight: 600;
-        background-color: lightyellow;
-        box-shadow: 5px 5px 5px gray;
-
-        &:hover {
-          cursor: pointer;
-          background-color: linen;
-        }
-
-        &:active {
-          transform: translateY(4px);
-        }
-      }
-
-      .clear-btn {
-        display: none;
-        height: 3.5em;
-        width: 6em;
-        margin: 1em;
-        padding: 0.5em;
-        font-size: 1rem;
-        font-weight: 600;
-        background-color: lightyellow;
-        border: none;
-        border-radius: 5px 5px;
-        width: 7em;
-
-        &:hover {
-          cursor: pointer;
-          background-color: linen;
-        }
-
-        &:active {
-          transform: translateY(4px);
-        }
-      }
-
-      .horizontal-mode-btn {
-        display: none;
-        height: 3.5em;
-        width: 7em;
-        margin: 1em;
-        padding: 0.5em;
-        font-size: 1rem;
-        font-weight: 600;
-        background-color: lightyellow;
-        border: none;
-        border-radius: 5px 5px;
-        width: 7em;
-
-        &:hover {
-          cursor: pointer;
-          background-color: linen;
-        }
-
-        &:active {
-          transform: translateY(4px);
-        }
-      }
-    }
-
-    .ship-wrapper {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-
-      .boat {
-        &:hover {
-          cursor: pointer;
-        }
-      }
-
-      .destroyer {
-        margin: 2em;
-        background-color: #cd853f;
-
-        .ship {
-          border: 1px solid black;
-          height: 2.5em;
-          width: 2.5em;
-        }
-      }
-
-      .cruiser {
-        margin: 2em;
-        background-color: #cd853f;
-
-        .ship {
-          border: 1px solid black;
-          height: 2.5em;
-          width: 2.5em;
-        }
-      }
-
-      .battleship {
-        margin: 2em;
-        background-color: #cd853f;
-
-        .ship {
-          border: 1px solid black;
-          height: 2.5em;
-          width: 2.5em;
-        }
-      }
-
-      .submarine {
-        margin: 2em;
-        background-color: #cd853f;
-
-        .ship {
-          border: 1px solid black;
-          height: 2.5em;
-          width: 2.5em;
-        }
-      }
-
-      .selected {
-        border: 4px solid green;
-        border-radius: 5px 5px;
-        padding: 0.5em;
-      }
-
-      .hidden {
-        opacity: 0;
-      }
-    }
+  @include responsive($tablet) {
+    font-size: 80%;
   }
 
-  footer {
+  @include responsive($desktop) {
+    font-size: 100%;
+  }
+
+  body {
     width: 100%;
-    height: 2em;
-    text-align: center;
-    font-weight: 600;
+    height: 100vh;
+    background: rgb(175, 139, 45);
+    background: linear-gradient(
+      90deg,
+      rgba(175, 139, 45, 1) 0%,
+      rgba(173, 212, 166, 1) 100%
+    );
 
-    a {
-      text-decoration: none;
-      color: black;
+    header {
+      h1 {
+        font-size: 2.8rem;
+        margin: 0.2em;
+
+        @include responsive($phone_port) {
+          opacity: 0;
+        }
+
+        @include responsive($tablet) {
+          opacity: 1;
+        }
+      }
+    }
+
+    .instructions {
+      h4 {
+        text-align: center;
+
+        @include responsive($phone_port) {
+          width: 95%;
+        }
+
+        @include responsive($tablet) {
+          width: 100%;
+        }
+      }
+    }
+
+    .container {
+      .start-game {
+        text-align: center;
+        display: none;
+
+        .start-game-btn {
+          border: none;
+          border-radius: 5px 5px;
+          height: 3em;
+          width: 13em;
+          font-size: 1.2rem;
+          font-weight: 600;
+          background-color: lightyellow;
+          box-shadow: 5px 5px 5px gray;
+          pointer-events: none;
+
+          &:hover {
+            cursor: pointer;
+            background-color: linen;
+          }
+          &:active {
+            transform: translateY(4px);
+          }
+        }
+      }
+
+      .msg-status-player {
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 1em;
+        height: 1.5em;
+      }
+
+      .msg-status-comp {
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        height: 1.5em;
+      }
+
+      .boards-wrapper {
+        margin-top: -2em;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        @include responsive($phone_port) {
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 1em;
+        }
+
+        @include responsive($phone_land) {
+          flex-direction: row;
+        }
+
+        h3 {
+          text-align: center;
+        }
+
+        .player-board {
+          display: flex;
+          flex-wrap: wrap;
+          width: 25em;
+          height: 25em;
+
+          .mouse-in {
+            background-color: #ffefd5;
+            cursor: pointer;
+          }
+
+          .mouse-leave {
+            background-color: transparent;
+          }
+        }
+
+        .computer-board {
+          display: flex;
+          flex-wrap: wrap;
+          width: 25em;
+          height: 25em;
+        }
+
+        .comp-square {
+          border: 1px solid black;
+          width: 2.5em;
+          height: 2.5em;
+
+          &:hover {
+            cursor: pointer;
+            background-color: lightyellow;
+          }
+        }
+
+        .square {
+          border: 1px solid black;
+          width: 2.5em;
+          height: 2.5em;
+        }
+
+        .missed {
+          background-color: maroon;
+        }
+
+        .hit {
+          font-size: 1rem;
+          font-weight: 600;
+          text-align: center;
+          padding-top: 0.5em;
+          background-color: mediumseagreen !important;
+        }
+      }
+
+      .console-div {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+
+        .confirm-btn {
+          border: none;
+          border-radius: 5px 5px;
+          height: 3.5em;
+          width: 12em;
+          margin: 1em;
+          padding: 0.5em;
+          font-size: 1rem;
+          font-weight: 600;
+          background-color: lightyellow;
+          box-shadow: 5px 5px 5px gray;
+
+          &:hover {
+            cursor: pointer;
+            background-color: linen;
+          }
+
+          &:active {
+            transform: translateY(4px);
+          }
+        }
+
+        .clear-btn {
+          display: none;
+          height: 3.5em;
+          width: 6em;
+          margin: 1em;
+          padding: 0.5em;
+          font-size: 1rem;
+          font-weight: 600;
+          background-color: lightyellow;
+          border: none;
+          border-radius: 5px 5px;
+          width: 7em;
+
+          &:hover {
+            cursor: pointer;
+            background-color: linen;
+          }
+
+          &:active {
+            transform: translateY(4px);
+          }
+        }
+
+        .horizontal-mode-btn {
+          display: none;
+          height: 3.5em;
+          width: 7em;
+          margin: 1em;
+          padding: 0.5em;
+          font-size: 1rem;
+          font-weight: 600;
+          background-color: lightyellow;
+          border: none;
+          border-radius: 5px 5px;
+          width: 7em;
+
+          &:hover {
+            cursor: pointer;
+            background-color: linen;
+          }
+
+          &:active {
+            transform: translateY(4px);
+          }
+        }
+      }
+
+      .ship-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        .boat {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .destroyer {
+          margin: 2em;
+          background-color: #cd853f;
+
+          .ship {
+            border: 1px solid black;
+            height: 2.5em;
+            width: 2.5em;
+          }
+        }
+
+        .cruiser {
+          margin: 2em;
+          background-color: #cd853f;
+
+          .ship {
+            border: 1px solid black;
+            height: 2.5em;
+            width: 2.5em;
+          }
+        }
+
+        .battleship {
+          margin: 2em;
+          background-color: #cd853f;
+
+          .ship {
+            border: 1px solid black;
+            height: 2.5em;
+            width: 2.5em;
+          }
+        }
+
+        .submarine {
+          margin: 2em;
+          background-color: #cd853f;
+
+          .ship {
+            border: 1px solid black;
+            height: 2.5em;
+            width: 2.5em;
+          }
+        }
+
+        .selected {
+          border: 2px solid green;
+          border-radius: 5px 5px;
+          padding: 0.5em;
+        }
+
+        .hidden {
+          opacity: 0;
+        }
+      }
+    }
+
+    footer {
+      width: 100%;
+      height: 2em;
+      text-align: center;
+      font-weight: 600;
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
     }
   }
 }
